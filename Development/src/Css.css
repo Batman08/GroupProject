@@ -7,22 +7,17 @@ body, html {
     padding: 0;
     height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    flex-direction: column; /* Set direction to column */
 }
 
-/* Header Styles */
+/* Header Styles with Navigation Right-Aligned */
 header {
     width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: space-between;
     padding: 15px 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: flex-end; /* Move navigation to the right */
     background-color: #16324f;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 header nav ul {
@@ -30,11 +25,7 @@ header nav ul {
     padding: 0;
     margin: 0;
     display: flex;
-    gap: 15px;
-}
-
-header nav ul li {
-    display: inline;
+    gap: 20px;
 }
 
 header nav ul li a {
@@ -43,12 +34,13 @@ header nav ul li a {
     font-weight: bold;
     text-decoration: none;
     padding: 8px 12px;
-    transition: color 0.3s;
+    transition: color 0.3s, background-color 0.3s;
+    border-radius: 5px;
 }
 
 header nav ul li a:hover {
-    color: #5ccfe6;
-    text-decoration: underline;
+    color: #13293d;
+    background-color: #5ccfe6;
 }
 
 /* Centered Container */
@@ -62,6 +54,7 @@ header nav ul li a:hover {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     background-color: #204060;
+    flex: 1; /* Allow the container to grow and fill space */
 }
 
 /* Header */
@@ -128,8 +121,9 @@ h1 {
     line-height: 1.6em;
 }
 
+/* Input Section */
 .input-section {
-    margin-top: 20px;
+    margin-top: 40px; /* Adjusted margin-top for better spacing */
 }
 
 #story-keyword {
@@ -142,7 +136,9 @@ h1 {
     font-size: 1em;
 }
 
+/* Load Story Button */
 #load-story {
+    margin-top: 10px; /* Extra margin-top to move down */
     padding: 10px 15px;
     background-color: #5ccfe6;
     border: none;
@@ -157,6 +153,7 @@ h1 {
     background-color: #52b1c2;
 }
 
+/* Restart Button */
 #restart {
     padding: 10px 15px;
     background-color: #ff6961;
@@ -179,6 +176,7 @@ footer {
     text-align: center;
     color: #e1e5f2;
     font-size: 0.9em;
+    padding: 10px; /* Added padding for better appearance */
 }
 
 footer a {
@@ -188,4 +186,15 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
+}
+
+/* Ensuring Footer is at the Bottom */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures footer is at the bottom of the viewport */
+}
+
+.container {
+    flex: 1; /* Makes the container expand to fill the space */
 }

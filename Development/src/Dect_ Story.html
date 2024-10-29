@@ -5,35 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Detective Story</title>
     <link rel="stylesheet" href="Css.css">
- 
-    <div> <!-- Header section containing navigation links -->
-        <header>
-            <nav>
-                <ul>
-                    <li><a href="#">Home Page</a></li>
-                   <a href="Dect_ Story.html">Dect Story</a>
-                </ul></div>
+</head>
 <body>
-    <div class="content-wrapper">
-        <div class="container">
-            <h1>Interactive Detective Story</h1>
-            <div class="input-section">
-                <input type="text" id="story-keyword" placeholder="Enter a story keyword...">
-                <button id="load-story">Load Story</button>
-            </div>
-            <div id="story-box">
-                <p id="story-text">Welcome! Please enter a keyword to start a story.</p>
-            </div>
-            <div id="choices-container"></div>
-            <div class="input-section">
-                <button id="restart" style="display:none;">Choose Another Story</button>
-            </div>
+    <!-- Navigation Section -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="Home_page.html">Home Page</a></li>
+                <li><a href="Dect_ Story.html">Detective Story</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Main Content Section -->
+    <div class="container">
+        <h1>Interactive Detective Story</h1>
+        
+        <div class="input-section">
+            <input type="text" id="story-keyword" placeholder="Enter a story keyword...">
+            <button id="load-story">Load Story</button>
         </div>
-        <footer>
-            <p>&copy; 2024 Group Project By Francis E. Udukhomoh & Bel.</p>
-            <p>Contact us at <a href="mailto:fudukh300@caledonian.ac.uk">Fudukh300@Caledonian.ac.uk</a> for more inquiries.</p>
-        </footer>
+        
+        <div id="story-box">
+            <p id="story-text">Welcome! Please enter a keyword to start a story.</p>
+        </div>
+        
+        <div id="choices-container"></div>
+        
+        <div class="input-section">
+            <button id="restart" style="display:none;">Choose Another Story</button>
+        </div>
     </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Group Project by Francis E. Udukhomoh & Bel.</p>
+        <p>Contact us at <a href="mailto:fudukh300@caledonian.ac.uk">fudukh300@caledonian.ac.uk</a> for more inquiries.</p>
+    </footer>
+
+    <!-- JavaScript Script -->
     <script src="JavaScript.js"></script>
 </body>
 </html>
