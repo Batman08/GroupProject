@@ -1,0 +1,39 @@
+﻿/* Search Form Styling */
+#formModuleSearch {
+    position: relative;
+    margin: auto;
+    max-width: 500px;
+}
+
+    #formModuleSearch input[type="text"] {
+        width: 100%;
+        padding: 12px 50px 12px 20px;
+        border: 1px solid #e1e5f2;
+        border-radius: 25px;
+        box-sizing: border-box;
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        font-size: 1em;
+        background-color: #1c4966;
+        color: #e1e5f2;
+    }
+
+        #formModuleSearch input[type="text"]:focus {
+            border-color: #5ccfe6;
+            box-shadow: 0 0 8px rgba(92, 207, 230, 0.5);
+        }
+
+    #formModuleSearch button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+        #formModuleSearch button i {
+            font-size: 20px;
+            color: #5ccfe6;
+        }

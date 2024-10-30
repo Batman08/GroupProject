@@ -1,0 +1,12 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #13293d; /* Dark blue background for readability */
+    color: #e1e5f2; /* Light, legible text color */
+}
+
+.gp-site-title {
+    margin-bottom: 30px;
+    color: #ffffff;
+    /* text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); */
+    text-shadow: 1px 1px 5px rgb(255 255 255 / 65%);
+}

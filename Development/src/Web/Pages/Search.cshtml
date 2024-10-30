@@ -1,0 +1,28 @@
+﻿@page
+@model Web.Pages.SearchModel
+@{
+    ViewData["Title"] = "Search";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/Pages/Search.cshtml.css" asp-append-version="true" />
+}
+
+
+<div id="divSearchContainer">
+    @* Search Form *@
+    <form id="formModuleSearch" method="post">
+        <input type="text" id="inputModuleSearch" name="ModuleSearch" class="ga-fp" placeholder="Begin your adventure" />
+        <button type="submit" class="btn"><i class="fa-solid fa-magnifying-glass text-white"></i></button>
+    </form>
+</div>
+
+
+@section Scripts {
+    <script src="~/Pages/Search.cshtml.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Search.Init();
+        });
+    </script>
+}
