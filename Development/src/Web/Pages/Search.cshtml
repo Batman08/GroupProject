@@ -9,12 +9,52 @@
 }
 
 
-<div id="divSearchContainer">
-    @* Search Form *@
-    <form id="formModuleSearch" method="post">
-        <input type="text" id="inputModuleSearch" name="ModuleSearch" class="ga-fp" placeholder="Begin your adventure" />
-        <button type="submit" class="btn"><i class="fa-solid fa-magnifying-glass text-white"></i></button>
-    </form>
+<div id="divSearchContainer" class="pt-3">
+    <div class="col-md-8 mx-auto">
+        @* Search Form *@
+        <form id="formModuleSearch" method="post">
+            <div class="row mx-auto align-items-center justify-content-center">
+                <div class="col-8">
+                    <input type="text" class="form-control" id="inputModuleSearch" name="ModuleSearch" placeholder="Enter story keywords">
+                </div>
+                <div class="col-4">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">Load Story</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div id="divSearchResults" class="row pt-5 g-5">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center pt-3">
+                    <button type="submit" class="btn btn-primary">Module 1</button>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center pt-3">
+                    <button type="submit" class="btn btn-primary">Module 2</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 

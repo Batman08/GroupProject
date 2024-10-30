@@ -2,10 +2,9 @@
 #formModuleSearch {
     position: relative;
     margin: auto;
-    max-width: 500px;
 }
 
-    #formModuleSearch input[type="text"] {
+/*    #formModuleSearch input[type="text"] {
         width: 100%;
         padding: 12px 50px 12px 20px;
         border: 1px solid #e1e5f2;
@@ -21,9 +20,9 @@
         #formModuleSearch input[type="text"]:focus {
             border-color: #5ccfe6;
             box-shadow: 0 0 8px rgba(92, 207, 230, 0.5);
-        }
+        }*/
 
-    #formModuleSearch button {
+/*    #formModuleSearch button {
         position: absolute;
         right: 10px;
         top: 50%;
@@ -36,4 +35,4 @@
         #formModuleSearch button i {
             font-size: 20px;
             color: #5ccfe6;
-        }
+        }*/
