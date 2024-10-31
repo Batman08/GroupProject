@@ -8,6 +8,7 @@ class Search {
     /* Controls */
     private readonly _container = document.getElementById("divSearchContainer") as HTMLDivElement;
     private readonly formModuleSearch = this._container.querySelector("#formModuleSearch") as HTMLFormElement;
+    private readonly inputModuleSearch = this._container.querySelector("#inputModuleSearch") as HTMLInputElement;
 
 
     /* Init */
@@ -25,7 +26,7 @@ class Search {
         ev.preventDefault();
 
         const formData: FormData = new FormData(this.formModuleSearch);
-        const dataToServer: ModuleSearchDTO = { ModuleSearch: formData.get("ModuleSearch").toString() };
+        const dataToServer: ModuleSearchDTO = { ModuleSearch: formData.get(this.inputModuleSearch.name) as string };
         const response: Response = await fetch(this._urlGetModuleOptions, {
             method: 'POST',
             headers: {
