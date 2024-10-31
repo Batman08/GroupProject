@@ -1,4 +1,12 @@
-﻿/* Search Form Styling */
+﻿input.gp {
+    padding: 12px !important;
+}
+
+button.gp {
+    padding: 12px !important;
+}
+
+/* Search Form Styling */
 #formModuleSearch {
     position: relative;
     margin: auto;
