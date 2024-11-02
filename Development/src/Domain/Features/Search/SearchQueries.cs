@@ -29,24 +29,10 @@ namespace Domain.Features.Search
                                Keywords = m.Keywords,
                            }).ToList();
 
-            //ModuleDTO? firstMatchingModule = null;
-            //foreach (var module in modules)
-            //{
-            //    List<string> parsedKeywords = JsonConvert.DeserializeObject<List<string>>(module.Keywords)!;
-            //    if (keywords.All(parsedKeywords.Contains))
-            //    {
-            //        firstMatchingModule = module;
-            //        break;
-            //    }
-            //}
-
             var matchingModules = modules.Where(module =>
             {
                 // Parse JSON string into a list of strings
                 var parsedKeywords = JsonConvert.DeserializeObject<List<string>>(module.Keywords)!;
-
-                // Check if any keyword in moduleKeywords matches searchKeywords
-                //return parsedKeywords.Any(keyword => keywords.Contains(keyword));
                 return keywords.All(parsedKeywords.Contains);
             }).ToList();
 
