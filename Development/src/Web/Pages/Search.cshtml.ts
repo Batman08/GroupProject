@@ -43,21 +43,28 @@ class Search {
     }
 
     private ServerRequestDone_GetModuleOptions(dataFromServer: ModuleOptionsDTO): void {
+        //clear all module options
         this.divSearchResults.innerHTML = "";
 
         for (let i = 0; i < dataFromServer.ModuleOptions.length; i++) {
-            const moduleOptionEl = this._divElementTemplates.querySelector('#divModuleOption').cloneNode(true) as HTMLDivElement;
-            moduleOptionEl.removeAttribute("id");
-
-            const pModuleContent = moduleOptionEl.querySelector("#pModuleContent") as HTMLParagraphElement;
-            pModuleContent.removeAttribute("id");
-            pModuleContent.textContent = dataFromServer.ModuleOptions[i].Contents;
-
-            const btnModule = moduleOptionEl.querySelector("#btnModule") as HTMLButtonElement;
-            btnModule.removeAttribute("id");
-            btnModule.textContent = `Module Option ${i + 1}`;
-
-            this.divSearchResults.appendChild(moduleOptionEl);
+            const optionNumber: number = i + 1;
+            const moduleOption = this.RenderModuleOption(dataFromServer.ModuleOptions[i], optionNumber);
+            this.divSearchResults.appendChild(moduleOption);
         }
+    }
+
+    private RenderModuleOption(moduleOption: ModuleOptionDTO, optionNumber: number): HTMLDivElement {
+        const moduleOptionEl = this._divElementTemplates.querySelector('#divModuleOption').cloneNode(true) as HTMLDivElement;
+        moduleOptionEl.removeAttribute("id");
+
+        const pModuleContent = moduleOptionEl.querySelector("#pModuleContent") as HTMLParagraphElement;
+        pModuleContent.removeAttribute("id");
+        pModuleContent.textContent = moduleOption.Contents;
+
+        const btnModule = moduleOptionEl.querySelector("#btnModule") as HTMLButtonElement;
+        btnModule.removeAttribute("id");
+        btnModule.textContent = `Module Option ${optionNumber}`;
+
+        return moduleOptionEl;
     }
 }
