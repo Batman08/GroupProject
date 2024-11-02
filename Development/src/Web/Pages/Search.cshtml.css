@@ -6,6 +6,12 @@ button.gp {
     padding: 12px !important;
 }
 
+.text-truncate.gp {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre !important;
+}
+
 /* Search Form Styling */
 #formModuleSearch {
     position: relative;

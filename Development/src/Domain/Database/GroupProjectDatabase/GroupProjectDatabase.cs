@@ -35,7 +35,6 @@ namespace Domain.Database
     public interface IGroupProjectDatabaseContext : IDisposable
     {
         DbSet<Module> Modules { get; set; } // Modules
-        DbSet<ModuleKeyword> ModuleKeywords { get; set; } // ModuleKeywords
         DbSet<ModuleStatusType> ModuleStatusTypes { get; set; } // ModuleStatusTypes
 
         int SaveChanges();
@@ -103,7 +102,6 @@ namespace Domain.Database
         }
 
         public DbSet<Module> Modules { get; set; } // Modules
-        public DbSet<ModuleKeyword> ModuleKeywords { get; set; } // ModuleKeywords
         public DbSet<ModuleStatusType> ModuleStatusTypes { get; set; } // ModuleStatusTypes
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -128,7 +126,6 @@ namespace Domain.Database
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new ModuleConfiguration());
-            modelBuilder.ApplyConfiguration(new ModuleKeywordConfiguration());
             modelBuilder.ApplyConfiguration(new ModuleStatusTypeConfiguration());
         }
 
@@ -157,7 +154,6 @@ namespace Domain.Database
     public class FakeGroupProjectDatabaseContext : IGroupProjectDatabaseContext
     {
         public DbSet<Module> Modules { get; set; } // Modules
-        public DbSet<ModuleKeyword> ModuleKeywords { get; set; } // ModuleKeywords
         public DbSet<ModuleStatusType> ModuleStatusTypes { get; set; } // ModuleStatusTypes
 
         public FakeGroupProjectDatabaseContext()
@@ -165,7 +161,6 @@ namespace Domain.Database
             _database = new FakeDatabaseFacade(new GroupProjectDatabaseContext());
 
             Modules = new FakeDbSet<Module>("ModuleId");
-            ModuleKeywords = new FakeDbSet<ModuleKeyword>("ModuleKeywordId");
             ModuleStatusTypes = new FakeDbSet<ModuleStatusType>("ModuleStatusTypeId");
 
         }
@@ -848,18 +843,12 @@ namespace Domain.Database
     // Modules
     public class Module
     {
-        public string ModuleId { get; set; } // ModuleId (Primary key) (length: 256)
+        public int ModuleId { get; set; } // ModuleId (Primary key)
         public string Name { get; set; } // Name (length: 50)
         public string Contents { get; set; } // Contents
+        public string Keywords { get; set; } // Keywords (length: 256)
         public string Author { get; set; } // Author (length: 256)
         public int ModuleStatusTypeId { get; set; } // ModuleStatusTypeId
-
-        // Reverse navigation
-
-        /// <summary>
-        /// Child ModuleKeywords where [ModuleKeywords].[ModuleId] point to this entity (FK_ModuleKeywords_Modules)
-        /// </summary>
-        public ICollection<ModuleKeyword> ModuleKeywords { get; set; } // ModuleKeywords.FK_ModuleKeywords_Modules
 
         // Foreign keys
 
@@ -867,26 +856,6 @@ namespace Domain.Database
         /// Parent ModuleStatusType pointed by [Modules].([ModuleStatusTypeId]) (FK_Modules_ModuleStatusTypes)
         /// </summary>
         public ModuleStatusType ModuleStatusType { get; set; } // FK_Modules_ModuleStatusTypes
-
-        public Module()
-        {
-            ModuleKeywords = new List<ModuleKeyword>();
-        }
-    }
-
-    // ModuleKeywords
-    public class ModuleKeyword
-    {
-        public string ModuleKeywordId { get; set; } // ModuleKeywordId (Primary key) (length: 256)
-        public string Name { get; set; } // Name (length: 256)
-        public string ModuleId { get; set; } // ModuleId (length: 256)
-
-        // Foreign keys
-
-        /// <summary>
-        /// Parent Module pointed by [ModuleKeywords].([ModuleId]) (FK_ModuleKeywords_Modules)
-        /// </summary>
-        public Module Module { get; set; } // FK_ModuleKeywords_Modules
     }
 
     // ModuleStatusTypes
@@ -925,31 +894,15 @@ namespace Domain.Database
             builder.ToTable("Modules", "dbo");
             builder.HasKey(x => x.ModuleId).HasName("PK_Modules").IsClustered();
 
-            builder.Property(x => x.ModuleId).HasColumnName(@"ModuleId").HasColumnType("nvarchar(256)").IsRequired().HasMaxLength(256).ValueGeneratedNever();
+            builder.Property(x => x.ModuleId).HasColumnName(@"ModuleId").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(x => x.Name).HasColumnName(@"Name").HasColumnType("nvarchar(50)").IsRequired().HasMaxLength(50);
             builder.Property(x => x.Contents).HasColumnName(@"Contents").HasColumnType("nvarchar(max)").IsRequired();
+            builder.Property(x => x.Keywords).HasColumnName(@"Keywords").HasColumnType("nvarchar(256)").IsRequired().HasMaxLength(256);
             builder.Property(x => x.Author).HasColumnName(@"Author").HasColumnType("nvarchar(256)").IsRequired().HasMaxLength(256);
             builder.Property(x => x.ModuleStatusTypeId).HasColumnName(@"ModuleStatusTypeId").HasColumnType("int").IsRequired();
 
             // Foreign keys
             builder.HasOne(a => a.ModuleStatusType).WithMany(b => b.Modules).HasForeignKey(c => c.ModuleStatusTypeId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Modules_ModuleStatusTypes");
-        }
-    }
-
-    // ModuleKeywords
-    public class ModuleKeywordConfiguration : IEntityTypeConfiguration<ModuleKeyword>
-    {
-        public void Configure(EntityTypeBuilder<ModuleKeyword> builder)
-        {
-            builder.ToTable("ModuleKeywords", "dbo");
-            builder.HasKey(x => x.ModuleKeywordId).HasName("PK_ModuleKeywords").IsClustered();
-
-            builder.Property(x => x.ModuleKeywordId).HasColumnName(@"ModuleKeywordId").HasColumnType("nvarchar(256)").IsRequired().HasMaxLength(256).ValueGeneratedNever();
-            builder.Property(x => x.Name).HasColumnName(@"Name").HasColumnType("nvarchar(256)").IsRequired().HasMaxLength(256);
-            builder.Property(x => x.ModuleId).HasColumnName(@"ModuleId").HasColumnType("nvarchar(256)").IsRequired().HasMaxLength(256);
-
-            // Foreign keys
-            builder.HasOne(a => a.Module).WithMany(b => b.ModuleKeywords).HasForeignKey(c => c.ModuleId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ModuleKeywords_Modules");
         }
     }
 

@@ -7,9 +7,9 @@ class Search {
 
     /* Controls */
     private readonly _container = document.getElementById("divSearchContainer") as HTMLDivElement;
+    private readonly _divElementTemplates = this._container.querySelector("#divElementTemplates") as HTMLDivElement;
     private readonly formModuleSearch = this._container.querySelector("#formModuleSearch") as HTMLFormElement;
-    private readonly inputModuleSearch = this._container.querySelector("#inputModuleSearch") as HTMLInputElement;
-
+    private readonly divSearchResults = this._container.querySelector("#divSearchResults") as HTMLDivElement;
 
     /* Init */
     public static Init(): void {
@@ -17,16 +17,13 @@ class Search {
     }
 
     private Init(): void {
-        this.BindSubmit_GetModuleOptions();
+        this.ServerRequest_GetModuleOptions();
     }
 
 
     /* GetModuleOptions */
-    private async ServerRequest_GetModuleOptions(ev: SubmitEvent): Promise<void> {
-        ev.preventDefault();
-
-        const formData: FormData = new FormData(this.formModuleSearch);
-        const dataToServer: ModuleSearchDTO = { ModuleSearch: formData.get(this.inputModuleSearch.name) as string };
+    private async ServerRequest_GetModuleOptions(): Promise<void> {
+        const dataToServer: ModuleSearchKeywordsDTO = { Keywords: ["Beginning", "Observation", "Wife", "Crime Boss"] }; // Example data for testing
         const response: Response = await fetch(this._urlGetModuleOptions, {
             method: 'POST',
             headers: {
@@ -37,7 +34,7 @@ class Search {
         });
 
         if (response.ok) {
-            const dataFromServer = await response.json();
+            const dataFromServer = await response.json() as ModuleOptionsDTO;
             this.ServerRequestDone_GetModuleOptions(dataFromServer);
         } else {
             const error = await response.text();
@@ -45,11 +42,22 @@ class Search {
         }
     }
 
-    private ServerRequestDone_GetModuleOptions(dataFromServer: any): void {
-        console.log(dataFromServer);
-    }
+    private ServerRequestDone_GetModuleOptions(dataFromServer: ModuleOptionsDTO): void {
+        this.divSearchResults.innerHTML = "";
 
-    private BindSubmit_GetModuleOptions(): void {
-        this.formModuleSearch.onsubmit = (ev: SubmitEvent) => this.ServerRequest_GetModuleOptions(ev);
+        for (let i = 0; i < dataFromServer.ModuleOptions.length; i++) {
+            const moduleOptionEl = this._divElementTemplates.querySelector('#divModuleOption').cloneNode(true) as HTMLDivElement;
+            moduleOptionEl.removeAttribute("id");
+
+            const pModuleContent = moduleOptionEl.querySelector("#pModuleContent") as HTMLParagraphElement;
+            pModuleContent.removeAttribute("id");
+            pModuleContent.textContent = dataFromServer.ModuleOptions[i].Contents;
+
+            const btnModule = moduleOptionEl.querySelector("#btnModule") as HTMLButtonElement;
+            btnModule.removeAttribute("id");
+            btnModule.textContent = `Module Option ${i + 1}`;
+
+            this.divSearchResults.appendChild(moduleOptionEl);
+        }
     }
 }
