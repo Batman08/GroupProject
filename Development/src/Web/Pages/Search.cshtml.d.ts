@@ -6,7 +6,7 @@ type ModuleOptionDTO = {
     ModuleId: number;
     Name: string;
     Contents: string;
-    Keywords: string;
+    Keywords: string[];
 }
 
 type ModuleOptionsDTO = {

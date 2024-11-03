@@ -20,22 +20,16 @@ namespace Domain.Features.Search
         {
             var modules = (from m in QueriesContext.Modules
                            join mst in QueriesContext.ModuleStatusTypes on m.ModuleStatusTypeId equals mst.ModuleStatusTypeId
-                           where mst.Name == "Draft"
+                           where mst.ModuleStatusTypeId == (int)ModuleStatusTypeEnum.Published
                            select new ModuleDTO
                            {
                                ModuleId = m.ModuleId,
                                Name = m.Name,
                                Contents = m.Contents,
-                               Keywords = m.Keywords,
+                               Keywords = JsonConvert.DeserializeObject<List<string>>(m.Keywords)!,
                            }).ToList();
 
-            var matchingModules = modules.Where(module =>
-            {
-                // Parse JSON string into a list of strings
-                var parsedKeywords = JsonConvert.DeserializeObject<List<string>>(module.Keywords)!;
-                return keywords.All(parsedKeywords.Contains);
-            }).ToList();
-
+            var matchingModules = modules.Where(module => keywords.All(module.Keywords.Contains)).ToList();
             return matchingModules;
         }
     }
