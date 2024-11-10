@@ -45,7 +45,7 @@ class Search {
     }
 
     private RenderModuleOption(moduleOption: ModuleOptionDTO, optionNumber: number): HTMLDivElement {
-        const moduleOptionEl = _Layout.ElementTemplates().querySelector('#divModuleOption').cloneNode(true) as HTMLDivElement;
+        const moduleOptionEl = _Layout.ElementTemplates().querySelector('#gp-divModuleOption').cloneNode(true) as HTMLDivElement;
         moduleOptionEl.removeAttribute("id");
 
         const pModuleContent = moduleOptionEl.querySelector("#pModuleContent") as HTMLParagraphElement;
