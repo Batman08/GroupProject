@@ -1,16 +1,23 @@
 ﻿/// <reference types="./Search.cshtml" />
 
 class Search {
-    /* Urls */
+    //#region Urls
+
     private readonly _urlGetModuleOptions: string = Utilities.Controller() + "ModuleOptions";
 
+    //#endregion
 
-    /* Controls */
+
+    //#region Controls
+
     private readonly _container = document.getElementById("divSearchContainer") as HTMLDivElement;
     private readonly divSearchResults = this._container.querySelector("#divSearchResults") as HTMLDivElement;
 
+    //#endregion
 
-    /* Init */
+
+    //#region Init
+
     public static Init(): void {
         new Search().Init();
     }
@@ -19,10 +26,13 @@ class Search {
         this.ServerRequest_GetModuleOptions();
     }
 
+    //#endregion
 
-    /* GetModuleOptions */
+
+    //#region GetModuleOptions
+
     private async ServerRequest_GetModuleOptions(): Promise<void> {
-        const dataToServer: string[]=  ["Beginning", "Observation", "Wife", "Crime Boss"]; // example data for testing
+        const dataToServer: string[] = ["Beginning", "Observation", "Wife", "Crime Boss"]; // example data for testing
         const response: Response = await fetch(`${this._urlGetModuleOptions}&${dataToServer}`, { method: 'GET' });
 
         if (response.ok) {
@@ -59,4 +69,6 @@ class Search {
 
         return moduleOptionEl;
     }
+
+    //#endregion
 }
