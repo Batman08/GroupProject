@@ -7,7 +7,6 @@ class Search {
 
     /* Controls */
     private readonly _container = document.getElementById("divSearchContainer") as HTMLDivElement;
-    private readonly _divElementTemplates = this._container.querySelector("#divElementTemplates") as HTMLDivElement;
     private readonly divSearchResults = this._container.querySelector("#divSearchResults") as HTMLDivElement;
 
     /* Init */
@@ -46,7 +45,7 @@ class Search {
     }
 
     private RenderModuleOption(moduleOption: ModuleOptionDTO, optionNumber: number): HTMLDivElement {
-        const moduleOptionEl = this._divElementTemplates.querySelector('#divModuleOption').cloneNode(true) as HTMLDivElement;
+        const moduleOptionEl = _Layout.ElementTemplates().querySelector('#divModuleOption').cloneNode(true) as HTMLDivElement;
         moduleOptionEl.removeAttribute("id");
 
         const pModuleContent = moduleOptionEl.querySelector("#pModuleContent") as HTMLParagraphElement;

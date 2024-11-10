@@ -5,7 +5,9 @@
 }
 
 @section Styles {
+
     <link rel="stylesheet" href="~/Pages/Search.cshtml.css" asp-append-version="true" />
+
 }
 
 
@@ -62,31 +64,34 @@
         </div>
     </div>
 
-    <div id="divElementTemplates" class="d-none" style="display:none;">
-        <div id="divModuleOption" class="col-md">
-            <div class="mb-5">
-                <div class="card">
-                    <div class="card-body">
-                        <p id="pModuleContent" class="card-text text-truncate gp">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        </p>
-                    </div>
-                </div>
+</div>
 
-                <div class="text-center pt-3">
-                    <button id="btnModule" type="submit" class="btn btn-primary gp">Module 1</button>
+@section ElementTemplates {
+
+    @* divModuleOption *@
+    <div id="divModuleOption" class="col-md">
+        <div class="mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <p id="pModuleContent" class="card-text text-truncate gp"></p>
                 </div>
+            </div>
+            <div class="text-center pt-3">
+                <button id="btnModule" type="submit" class="btn btn-primary gp"></button>
             </div>
         </div>
     </div>
-</div>
+
+}
 
 
 @section Scripts {
+
     <script src="~/Pages/Search.cshtml.js" asp-append-version="true"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             Search.Init();
         });
     </script>
+
 }
