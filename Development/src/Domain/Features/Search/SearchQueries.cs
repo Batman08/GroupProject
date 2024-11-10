@@ -6,7 +6,7 @@ namespace Domain.Features.Search
 {
     public interface ISearchQueries
     {
-        List<ModuleDTO> GetModuleOptions(List<string> moduleKeywords);
+        List<ModuleDTO> GetModuleOptions(List<string> keywords);
     }
 
     public class SearchQueries : QueriesBase, ISearchQueries, IGpScoped
@@ -27,7 +27,7 @@ namespace Domain.Features.Search
                                Name = m.Name,
                                Contents = m.Contents,
                                Keywords = JsonConvert.DeserializeObject<List<string>>(m.Keywords)!,
-                           }).ToList();
+                           }).Take(2).ToList();
 
             var matchingModules = modules.Where(module => keywords.All(module.Keywords.Contains)).ToList();
             return matchingModules;

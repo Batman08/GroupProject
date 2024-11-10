@@ -18,9 +18,9 @@ namespace Web.Pages
         {
         }
 
-        public JsonResult OnPostGetModuleOptions([FromBody] ModuleSearchKeywordsDTO moduleKeywords)
+        public JsonResult OnGetModuleOptions([FromQuery] List<string> keywords)
         {
-            var result = _searchQueries.GetModuleOptions(moduleKeywords.Keywords);
+            var result = _searchQueries.GetModuleOptions(keywords);
             return new JsonResult(new { ModuleOptions = result }, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
     }

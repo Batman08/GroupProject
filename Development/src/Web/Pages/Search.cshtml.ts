@@ -2,13 +2,12 @@
 
 class Search {
     /* Urls */
-    private readonly _urlGetModuleOptions: string = Utilities.Controller() + "GetModuleOptions";
+    private readonly _urlGetModuleOptions: string = Utilities.Controller() + "ModuleOptions";
 
 
     /* Controls */
     private readonly _container = document.getElementById("divSearchContainer") as HTMLDivElement;
     private readonly _divElementTemplates = this._container.querySelector("#divElementTemplates") as HTMLDivElement;
-    private readonly formModuleSearch = this._container.querySelector("#formModuleSearch") as HTMLFormElement;
     private readonly divSearchResults = this._container.querySelector("#divSearchResults") as HTMLDivElement;
 
     /* Init */
@@ -23,15 +22,8 @@ class Search {
 
     /* GetModuleOptions */
     private async ServerRequest_GetModuleOptions(): Promise<void> {
-        const dataToServer: ModuleSearchKeywordsDTO = { Keywords: ["Beginning", "Observation", "Wife", "Crime Boss"] }; // Example data for testing
-        const response: Response = await fetch(this._urlGetModuleOptions, {
-            method: 'POST',
-            headers: {
-                'XSRF-TOKEN': Utilities.GetVerficationToken(this.formModuleSearch),
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataToServer)
-        });
+        const dataToServer: string[]=  ["Beginning", "Observation", "Wife", "Crime Boss"]; // example data for testing
+        const response: Response = await fetch(`${this._urlGetModuleOptions}&${dataToServer}`, { method: 'GET' });
 
         if (response.ok) {
             const dataFromServer = await response.json() as ModuleOptionsDTO;

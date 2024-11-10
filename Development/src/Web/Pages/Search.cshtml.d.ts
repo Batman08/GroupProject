@@ -1,8 +1,4 @@
-﻿type ModuleSearchKeywordsDTO = {
-    Keywords: string[];
-};
-
-type ModuleOptionDTO = {
+﻿type ModuleOptionDTO = {
     ModuleId: number;
     Name: string;
     Contents: string;
