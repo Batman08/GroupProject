@@ -9,6 +9,7 @@ class Search {
     private readonly _container = document.getElementById("divSearchContainer") as HTMLDivElement;
     private readonly divSearchResults = this._container.querySelector("#divSearchResults") as HTMLDivElement;
 
+
     /* Init */
     public static Init(): void {
         new Search().Init();
