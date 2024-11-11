@@ -1,6 +1,6 @@
 ﻿namespace Domain.Features.Search
 {
-    public class ModuleDTO
+    public class ModuleOverviewDTO
     {
         public int ModuleId { get; set; }
         public string Name { get; set; } = "";

@@ -6,7 +6,7 @@ namespace Domain.Features.Search
 {
     public interface ISearchQueries
     {
-        List<ModuleDTO> GetModuleOptions(List<string> keywords);
+        List<ModuleOverviewDTO> GetModuleOptions(List<string> keywords);
     }
 
     public class SearchQueries : QueriesBase, ISearchQueries, IGpScoped
@@ -16,12 +16,12 @@ namespace Domain.Features.Search
 
         }
 
-        public List<ModuleDTO> GetModuleOptions(List<string> keywords)
+        public List<ModuleOverviewDTO> GetModuleOptions(List<string> keywords)
         {
             var modules = (from m in QueriesContext.Modules
                            join mst in QueriesContext.ModuleStatusTypes on m.ModuleStatusTypeId equals mst.ModuleStatusTypeId
                            where mst.ModuleStatusTypeId == (int)ModuleStatusTypeEnum.Published
-                           select new ModuleDTO
+                           select new ModuleOverviewDTO
                            {
                                ModuleId = m.ModuleId,
                                Name = m.Name,
