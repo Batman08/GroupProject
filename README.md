@@ -4,11 +4,11 @@
 
 ## Build the Project
 
-1. **Restore NuGet Packages - Do after initial setup/pull request from repo**
+1. **Restore NuGet Packages - Do after initial setup / after pull request from repo**
 
    - In the **Solution Explorer**, right-click on the solution at the top and select **Restore NuGet Packages**.
 
-2. **Restore Node Modules - Do after initial setup/pull request from repo**
+2. **Restore Node Modules - Do after initial setup / after pull request from repo**
 
    - Inside `1. Web` project there is a `package.json` file.
    - Right-click on the file and select `Restore Packages`.
