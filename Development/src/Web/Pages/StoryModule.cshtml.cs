@@ -18,10 +18,8 @@ namespace Web.Pages
 
         public IActionResult OnGet(string selected)
         {
-            if (string.IsNullOrEmpty(selected)) return RedirectToPage(UrlConstants.SearchPageUrl);
-
             var moduleId = ExtractModuleId(selected);
-            if (moduleId == null) return RedirectToPage(UrlConstants.SearchPageUrl);
+            if (string.IsNullOrEmpty(selected) || moduleId == null) return RedirectToPage(UrlConstants.SearchPageUrl);
 
             InitialModule = _storyModuleQueries.GetInitalModule(moduleId.Value)!;
             if (InitialModule == null) return RedirectToPage(UrlConstants.SearchPageUrl, new { error = "Story not found" });
@@ -29,13 +27,16 @@ namespace Web.Pages
             return Page();
         }
 
-        private int? ExtractModuleId(string selected)
+        private int? ExtractModuleId(string selectedModuleIdStr)
         {
-            if (int.TryParse(selected, out int moduleId))
+            if (int.TryParse(selectedModuleIdStr, out int moduleId))
             {
                 return moduleId;
             }
-            return null!;
+            else
+            {
+                return null;
+            }
         }
     }
 }
