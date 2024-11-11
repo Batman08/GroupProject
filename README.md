@@ -1,6 +1,6 @@
-# How To Run Steps
+# How To Run
 
-<em>Do the steps below when the project is open in Visual Studio 2022.</em>
+<em>The steps below must be done when the project is open in Visual Studio 2022.</em>
 
 ## Build the Project
 
