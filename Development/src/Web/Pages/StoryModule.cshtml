@@ -5,30 +5,45 @@
 }
 
 @section Styles {
+
     <link rel="stylesheet" href="~/Pages/StoryModule.cshtml.css" asp-append-version="true" />
+
 }
 
 
-<div id="divStoryModuleContainer">
-    <div class="input-section">
-        <input type="text" id="story-keyword" placeholder="Enter a story keyword...">
-        <button id="load-story">Load Story</button>
-    </div>
-    <div id="story-box">
-        <p id="story-text">Welcome! Please enter a keyword to start a story.</p>
-    </div>
-    <div id="choices-container"></div>
-    <div class="input-section">
-        <button id="restart" style="display:none;">Choose Another Story</button>
+<div id="divStoryModuleContainer" class="pt-3">
+    <div class="col-md-8 mx-auto">
+        <div id="divModule" class="col-md pt-5">
+            <div class="mb-5">
+                <div class="card">
+                    <div class="card-body">
+                        <p id="pModuleContent" class="card-text stm-line-space">@Model.InitialModule.Contents</p>
+                    </div>
+                </div>
+                <div class="text-center pt-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary stm">Option 1</button>
+                        </div>
+
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary stm">Option 2</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 
 @section Scripts {
+
     @*     <script src="~/Pages/StoryModule.cshtml.js" asp-append-version="true"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             StoryModule.Init();
         });
     </script> *@
+
 }

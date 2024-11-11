@@ -45,7 +45,7 @@ class Search {
     }
 
     private ServerRequestDone_GetModuleOptions(dataFromServer: ModuleOptionsDTO): void {
-        //clear all module options
+        //clear module loading panels
         this.divSearchResults.innerHTML = "";
 
         for (let i = 0; i < dataFromServer.ModuleOptions.length; i++) {
@@ -55,17 +55,18 @@ class Search {
         }
     }
 
-    private RenderModuleOption(moduleOption: ModuleOptionDTO, optionNumber: number): HTMLDivElement {
+    private RenderModuleOption(data: ModuleOptionDTO, optionNumber: number): HTMLDivElement {
         const moduleOptionEl = _Layout.ElementTemplates().querySelector('#gp-divModuleOption').cloneNode(true) as HTMLDivElement;
         moduleOptionEl.removeAttribute("id");
 
         const pModuleContent = moduleOptionEl.querySelector("#pModuleContent") as HTMLParagraphElement;
         pModuleContent.removeAttribute("id");
-        pModuleContent.textContent = moduleOption.Contents;
+        pModuleContent.textContent = data.Contents;
 
         const btnModule = moduleOptionEl.querySelector("#btnModule") as HTMLButtonElement;
         btnModule.removeAttribute("id");
-        btnModule.textContent = `Module Option ${optionNumber}`;
+        btnModule.textContent = `Module ${optionNumber}`;
+        btnModule.onclick = (ev: MouseEvent) => window.location.href = `StoryModule?selected=${data.ModuleId}`;
 
         return moduleOptionEl;
     }
