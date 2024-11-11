@@ -19,7 +19,7 @@ namespace Web.Pages
         public IActionResult OnGet(string selected)
         {
             var moduleId = ExtractModuleId(selected);
-            if (string.IsNullOrEmpty(selected) || moduleId == null) return RedirectToPage(UrlConstants.SearchPageUrl);
+            if (moduleId == null) return RedirectToPage(UrlConstants.SearchPageUrl);
 
             InitialModule = _storyModuleQueries.GetInitalModule(moduleId.Value)!;
             if (InitialModule == null) return RedirectToPage(UrlConstants.SearchPageUrl, new { error = "Story not found" });
