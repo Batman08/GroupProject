@@ -39,11 +39,10 @@
 
 @section Scripts {
 
-    @* <script src="~/Pages/StoryModule.cshtml.js" asp-append-version="true"></script> *@
+    <script src="~/Pages/StoryModule.cshtml.js" asp-append-version="true"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            Utilities.RemoveUrlQueryString();
-            // StoryModule.Init();
+            StoryModule.Init();
         });
     </script>
 
