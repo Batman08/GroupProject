@@ -1,0 +1,10 @@
+For commit messages, the branch name should always come first followed by a hyphen "-" then the commit message.
+
+Example - branch name "main"
+	Commit Message:
+		"main - this is an example message"
+		
+		
+Example - branch name "01_-_Project_files_refactor"
+	Commit Message:
+		"01 - this is an example message"
