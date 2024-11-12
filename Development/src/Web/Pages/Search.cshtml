@@ -13,7 +13,7 @@
 
 <div id="divSearchContainer" class="pt-3">
     <div class="col-md-8 mx-auto">
-        <div id="divSearchResults" class="row row-cols-1 row-cols-md-2 pt-5">
+        <div id="divSearchResults" class="row row-cols-1 row-cols-md-2 pt-5 g-4">
 
             @* Loading Placeholder *@
             <div class="col">
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="text-center pt-3">
-                        <button class="btn btn-primary disabled placeholder col-6 gp" aria-disabled="true"></button>
+                        <button class="btn btn-primary disabled placeholder col-4 srch" aria-disabled="true"></button>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="text-center pt-3">
-                        <button class="btn btn-primary disabled placeholder col-6 gp" aria-disabled="true"></button>
+                        <button class="btn btn-primary disabled placeholder col-4 srch" aria-disabled="true"></button>
                     </div>
                 </div>
             </div>
@@ -70,18 +70,34 @@
 
     @* divModuleOption *@
     <div id="gp-divModuleOption" class="col-md">
+        <div class="mb-5 h-100">
+            <div class="card h-100">
+                <div class="card-body">
+                    <p id="pModuleOverview" class="card-text lyt-line-space"></p>
+                </div>
+
+                <div class="card-footer srch-card-footer">
+                    <div class="text-center">
+                        <button id="btnModule" type="button" class="btn btn-primary srch"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*__NOTE: May be used instead of the above divModuleOption template__
+        <div id="gp-divModuleOption" class="col-md">
         <div class="mb-5">
             <div class="card">
                 <div class="card-body">
-                    <p id="pModuleContent" class="card-text text-truncate gp"></p>
+                    <p id="pModuleOverview" class="card-text text-truncate gp"></p>
                 </div>
             </div>
             <div class="text-center pt-3">
                 <button id="btnModule" type="button" class="btn btn-primary gp"></button>
             </div>
         </div>
-    </div>
-
+    </div> *@
 }
 
 

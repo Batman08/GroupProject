@@ -1,7 +1,7 @@
 ﻿type ModuleOptionDTO = {
     ModuleId: number;
     Name: string;
-    Contents: string;
+    Overview: string;
     Keywords: string[];
 }
 

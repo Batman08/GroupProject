@@ -25,7 +25,7 @@ namespace Domain.Features.Search
                            {
                                ModuleId = m.ModuleId,
                                Name = m.Name,
-                               Contents = m.Contents,
+                               Overview = m.Overview,
                                Keywords = JsonConvert.DeserializeObject<List<string>>(m.Keywords)!,
                            }).Take(2).ToList();
 

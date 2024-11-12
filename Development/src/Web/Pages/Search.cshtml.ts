@@ -59,9 +59,9 @@ class Search {
         const moduleOptionEl = _Layout.ElementTemplates().querySelector('#gp-divModuleOption').cloneNode(true) as HTMLDivElement;
         moduleOptionEl.removeAttribute("id");
 
-        const pModuleContent = moduleOptionEl.querySelector("#pModuleContent") as HTMLParagraphElement;
-        pModuleContent.removeAttribute("id");
-        pModuleContent.textContent = data.Contents;
+        const pModuleOverview = moduleOptionEl.querySelector("#pModuleOverview") as HTMLParagraphElement;
+        pModuleOverview.removeAttribute("id");
+        pModuleOverview.textContent = data.Overview;
 
         const btnModule = moduleOptionEl.querySelector("#btnModule") as HTMLButtonElement;
         btnModule.removeAttribute("id");
