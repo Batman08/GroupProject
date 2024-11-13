@@ -48,6 +48,13 @@ class Search {
         //clear module loading panels
         this.divSearchResults.innerHTML = "";
 
+        //show message when no module options have been returned
+        if (dataFromServer.ModuleOptions.length === 0) {
+            const alertMsg = Utilities.Alert({ Message: '<i class="fa-solid fa-ban fw-bold"></i> No stories found', Format: "WithAccentColour", Type: "light", AdditionalClasses: 'shadow-lg fs-5 fw-bold', OverrideWidthToMax: true });
+            this.divSearchResults.appendChild(alertMsg);
+            return;
+        }
+
         for (let i = 0; i < dataFromServer.ModuleOptions.length; i++) {
             const optionNumber: number = i + 1;
             const moduleOption = this.RenderModuleOption(dataFromServer.ModuleOptions[i], optionNumber);
