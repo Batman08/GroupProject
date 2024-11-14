@@ -73,9 +73,29 @@ class Search {
         const btnModule = moduleOptionEl.querySelector("#btnModule") as HTMLButtonElement;
         btnModule.removeAttribute("id");
         btnModule.textContent = `Module ${optionNumber}`;
-        btnModule.onclick = (ev: MouseEvent) => window.location.href = `StoryModule?selected=${data.ModuleId}`;
+        btnModule.onclick = (ev: MouseEvent) => {
+            this.DisableAllModuleOptionButtons(ev.target as HTMLElement);
+            window.location.href = `StoryModule?selected=${data.ModuleId}`;
+        };
 
         return moduleOptionEl;
+    }
+
+    private DisableAllModuleOptionButtons(targetEl: HTMLElement): void {
+        //add loading spinner to the selected button
+        const selectedBtnEl = targetEl.closest("button[btnModuleOption]") as HTMLButtonElement;
+        selectedBtnEl.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> ${selectedBtnEl.textContent}`;
+
+        const moduleOptionBtns = this._container.querySelectorAll("button[btnModuleOption]") as NodeListOf<HTMLButtonElement>;
+        moduleOptionBtns.forEach((btn: HTMLButtonElement) => {
+            Utilities.DisableBtn(btn);
+
+            //keep the selected button highlighted only
+            if (btn !== selectedBtnEl) {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-light');
+            }
+        });
     }
 
     //#endregion

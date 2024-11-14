@@ -19,6 +19,16 @@ class Utilities {
         window.history.replaceState({}, document.title, urlWithoutQueryString); // Change the URL without refreshing the page
     }
 
+    public static EnableBtn(btnEl: HTMLButtonElement): void {
+        btnEl.style.pointerEvents = "auto";
+        btnEl.disabled = false;
+    }
+
+    public static DisableBtn(btnEl: HTMLButtonElement): void {
+        btnEl.style.pointerEvents = "none";
+        btnEl.disabled = true;
+    }
+
     //#endregion
 
 
