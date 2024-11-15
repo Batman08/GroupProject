@@ -1,0 +1,86 @@
+Typescript function naming for functions that make requests to the server
+=========================================================================s
+
+Typescript functions should be prefixed with "ServerRequest_"  
+
+e.g.
+	/* Typescript Example */
+
+	private ServerRequest_GetStoryModule(): void {
+
+	}
+
+
+C# action function naming convention
+====================================
+
+- C# code behind model (.cshtml.cs file) action methods should be either be prefixed with "OnGet" or "OnPost" depending what type of ajax request you're making and should always be public.
+- If you are sending data to the action method then within the method parameteres add "[FromBody] <Object Type> <param name>".
+
+e.g.
+Example.cshtml.cs file:
+
+	public IActionResult OnPostCreateUserExample([FromBody] CreateUserDTO userData){
+		<code>
+	}
+
+
+
+Step 1
+======
+
+Within your .ts file create variable to point towards your server action method 
+
+e.g.
+Example.cshtml.cs file:
+
+	public IActionResult OnGetStoryModule([FromBody] ModuleIdDTO moduleId){
+		var module = GetModuleFromDB(moduleId);
+		return new JsonResult(new { ModuleData = module }, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+	}
+	
+Example.ts file:
+	
+	private readonly _urlGetStoryModule:string = Utilities.Controller + "StoryModule";
+	
+
+Step 2
+======
+Create your function to make the request to the server e.g.
+
+Example.ts file:
+	
+	private async ServerRequest_GetModule(): Promise<void> {
+		const dataToServer: ModuleIdDTO = {
+			ModuleId: "1" // example data
+		};
+		const queryParams = new URLSearchParams(dataToServer).toString();
+        const response: Response = await fetch(`${this._urlGetStoryModule}&${queryParams}`, { method: 'GET' });
+
+        if (response.ok) { //request returned success
+            const dataFromServer = await response.json() as any;
+            this.ServerRequestDone_GetModule(dataFromServer);
+        } else { //request returned error
+            const error = await response.text();
+            console.error(`Error ${response.status} ${response.statusText}:`, error);
+        }
+    }
+
+    private ServerRequestDone_GetModule(dataFromServer: any): void {
+        //do something witht the data returned
+    }
+	
+
+Step 3
+======
+Define types e.g.
+
+Example.d.ts file:
+
+	type ModuleIdDTO = {
+		ModuleId: String;
+	}
+	
+	
+
+**Note: post requests are done slightly different.**
