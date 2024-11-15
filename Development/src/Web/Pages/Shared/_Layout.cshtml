@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Interactive Detective Story</title>
+    <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/node_modules/@@fortawesome/fontawesome-free/css/all.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Pages/Shared/_Layout.cshtml.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Search">Search</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <h1 class="gp-site-title text-center mt-5">Interactive Detective Story</h1>
+
+            @RenderBody()
+
+            <div id="divElementTemplates" class="d-none" style="display:none;">
+                @await RenderSectionAsync("ElementTemplates", required: false)
+            </div>
+        </main>
+    </div>
+
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/node_modules/@@fortawesome/fontawesome-free/js/all.min.js" asp-append-version="true"></script>
+    <script src="~/js/Utilities.js" asp-append-version="true"></script>
+    <script src="~/js/KeywordsGenerator.js" asp-append-version="true"></script>
+    <script src="~/Pages/Shared/_Layout.cshtml.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            KeywordsGenerator.Init();
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

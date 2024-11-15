@@ -1,0 +1,49 @@
+﻿@page
+@model StoryModuleModel
+@{
+    ViewData["Title"] = "Story Module";
+}
+
+@section Styles {
+
+    <link rel="stylesheet" href="~/Pages/StoryModule.cshtml.css" asp-append-version="true" />
+
+}
+
+
+<div id="divStoryModuleContainer" class="pt-3">
+    <div class="col-md-8 mx-auto">
+        <div id="divModule" class="col-md pt-5">
+            <div class="mb-5">
+                <div class="card">
+                    <div class="card-body">
+                        <p id="pModuleContent" class="card-text lyt-line-space">@Model.InitialModule.Contents</p>
+                    </div>
+                </div>
+                <div class="text-center pt-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary stm">Option 1</button>
+                        </div>
+
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary stm">Option 2</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script src="~/Pages/StoryModule.cshtml.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            StoryModule.Init();
+        });
+    </script>
+
+}
