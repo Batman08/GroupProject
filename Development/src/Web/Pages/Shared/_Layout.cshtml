@@ -43,7 +43,13 @@
     <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="~/node_modules/@@fortawesome/fontawesome-free/js/all.min.js" asp-append-version="true"></script>
     <script src="~/js/Utilities.js" asp-append-version="true"></script>
+    <script src="~/js/KeywordsGenerator.js" asp-append-version="true"></script>
     <script src="~/Pages/Shared/_Layout.cshtml.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            KeywordsGenerator.Init();
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
