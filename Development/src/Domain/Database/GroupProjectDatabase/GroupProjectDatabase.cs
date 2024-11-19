@@ -34,7 +34,10 @@ namespace Domain.Database
 
     public interface IGroupProjectDatabaseContext : IDisposable
     {
+        DbSet<Category> Categories { get; set; } // Categories
+        DbSet<Keyword> Keywords { get; set; } // Keywords
         DbSet<Module> Modules { get; set; } // Modules
+        DbSet<Modules2Keywords> Modules2Keywords { get; set; } // Modules2Keywords
         DbSet<ModuleStatusType> ModuleStatusTypes { get; set; } // ModuleStatusTypes
 
         int SaveChanges();
@@ -101,7 +104,10 @@ namespace Domain.Database
         {
         }
 
+        public DbSet<Category> Categories { get; set; } // Categories
+        public DbSet<Keyword> Keywords { get; set; } // Keywords
         public DbSet<Module> Modules { get; set; } // Modules
+        public DbSet<Modules2Keywords> Modules2Keywords { get; set; } // Modules2Keywords
         public DbSet<ModuleStatusType> ModuleStatusTypes { get; set; } // ModuleStatusTypes
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -125,7 +131,10 @@ namespace Domain.Database
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new KeywordConfiguration());
             modelBuilder.ApplyConfiguration(new ModuleConfiguration());
+            modelBuilder.ApplyConfiguration(new Modules2KeywordsConfiguration());
             modelBuilder.ApplyConfiguration(new ModuleStatusTypeConfiguration());
         }
 
@@ -153,14 +162,20 @@ namespace Domain.Database
 
     public class FakeGroupProjectDatabaseContext : IGroupProjectDatabaseContext
     {
+        public DbSet<Category> Categories { get; set; } // Categories
+        public DbSet<Keyword> Keywords { get; set; } // Keywords
         public DbSet<Module> Modules { get; set; } // Modules
+        public DbSet<Modules2Keywords> Modules2Keywords { get; set; } // Modules2Keywords
         public DbSet<ModuleStatusType> ModuleStatusTypes { get; set; } // ModuleStatusTypes
 
         public FakeGroupProjectDatabaseContext()
         {
             _database = new FakeDatabaseFacade(new GroupProjectDatabaseContext());
 
+            Categories = new FakeDbSet<Category>("CategoryId");
+            Keywords = new FakeDbSet<Keyword>("KeywordId");
             Modules = new FakeDbSet<Module>("ModuleId");
+            Modules2Keywords = new FakeDbSet<Modules2Keywords>("Module2KeywordId");
             ModuleStatusTypes = new FakeDbSet<ModuleStatusType>("ModuleStatusTypeId");
 
         }
@@ -840,6 +855,52 @@ namespace Domain.Database
     // This is not a commercial licence, therefore only a few tables/views/stored procedures are generated.
     // ****************************************************************************************************
 
+    // Categories
+    public class Category
+    {
+        public int CategoryId { get; set; } // CategoryId (Primary key)
+        public string Name { get; set; } // Name (length: 100)
+
+        // Reverse navigation
+
+        /// <summary>
+        /// Child Keywords where [Keywords].[CategoryId] point to this entity (FK_Keywords_Categories)
+        /// </summary>
+        public ICollection<Keyword> Keywords { get; set; } // Keywords.FK_Keywords_Categories
+
+        public Category()
+        {
+            Keywords = new List<Keyword>();
+        }
+    }
+
+    // Keywords
+    public class Keyword
+    {
+        public int KeywordId { get; set; } // KeywordId (Primary key)
+        public string Name { get; set; } // Name
+        public int CategoryId { get; set; } // CategoryId
+
+        // Reverse navigation
+
+        /// <summary>
+        /// Child Modules2Keywords where [Modules2Keywords].[KeywordId] point to this entity (FK_Modules2Keywords_Keywords)
+        /// </summary>
+        public ICollection<Modules2Keywords> Modules2Keywords { get; set; } // Modules2Keywords.FK_Modules2Keywords_Keywords
+
+        // Foreign keys
+
+        /// <summary>
+        /// Parent Category pointed by [Keywords].([CategoryId]) (FK_Keywords_Categories)
+        /// </summary>
+        public Category Category { get; set; } // FK_Keywords_Categories
+
+        public Keyword()
+        {
+            Modules2Keywords = new List<Modules2Keywords>();
+        }
+    }
+
     // Modules
     public class Module
     {
@@ -847,9 +908,15 @@ namespace Domain.Database
         public string Name { get; set; } // Name (length: 50)
         public string Contents { get; set; } // Contents
         public string Overview { get; set; } // Overview (length: 800)
-        public string Keywords { get; set; } // Keywords (length: 256)
         public string Author { get; set; } // Author (length: 256)
         public int ModuleStatusTypeId { get; set; } // ModuleStatusTypeId
+
+        // Reverse navigation
+
+        /// <summary>
+        /// Child Modules2Keywords where [Modules2Keywords].[ModuleId] point to this entity (FK_Modules2Keywords_Modules)
+        /// </summary>
+        public ICollection<Modules2Keywords> Modules2Keywords { get; set; } // Modules2Keywords.FK_Modules2Keywords_Modules
 
         // Foreign keys
 
@@ -857,6 +924,31 @@ namespace Domain.Database
         /// Parent ModuleStatusType pointed by [Modules].([ModuleStatusTypeId]) (FK_Modules_ModuleStatusTypes)
         /// </summary>
         public ModuleStatusType ModuleStatusType { get; set; } // FK_Modules_ModuleStatusTypes
+
+        public Module()
+        {
+            Modules2Keywords = new List<Modules2Keywords>();
+        }
+    }
+
+    // Modules2Keywords
+    public class Modules2Keywords
+    {
+        public int Module2KeywordId { get; set; } // Module2KeywordId (Primary key)
+        public int ModuleId { get; set; } // ModuleId
+        public int KeywordId { get; set; } // KeywordId
+
+        // Foreign keys
+
+        /// <summary>
+        /// Parent Keyword pointed by [Modules2Keywords].([KeywordId]) (FK_Modules2Keywords_Keywords)
+        /// </summary>
+        public Keyword Keyword { get; set; } // FK_Modules2Keywords_Keywords
+
+        /// <summary>
+        /// Parent Module pointed by [Modules2Keywords].([ModuleId]) (FK_Modules2Keywords_Modules)
+        /// </summary>
+        public Module Module { get; set; } // FK_Modules2Keywords_Modules
     }
 
     // ModuleStatusTypes
@@ -887,6 +979,36 @@ namespace Domain.Database
     // This is not a commercial licence, therefore only a few tables/views/stored procedures are generated.
     // ****************************************************************************************************
 
+    // Categories
+    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    {
+        public void Configure(EntityTypeBuilder<Category> builder)
+        {
+            builder.ToTable("Categories", "dbo");
+            builder.HasKey(x => x.CategoryId).HasName("PK_Categories").IsClustered();
+
+            builder.Property(x => x.CategoryId).HasColumnName(@"CategoryId").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
+            builder.Property(x => x.Name).HasColumnName(@"Name").HasColumnType("nvarchar(100)").IsRequired().HasMaxLength(100);
+        }
+    }
+
+    // Keywords
+    public class KeywordConfiguration : IEntityTypeConfiguration<Keyword>
+    {
+        public void Configure(EntityTypeBuilder<Keyword> builder)
+        {
+            builder.ToTable("Keywords", "dbo");
+            builder.HasKey(x => x.KeywordId).HasName("PK_Keywords").IsClustered();
+
+            builder.Property(x => x.KeywordId).HasColumnName(@"KeywordId").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
+            builder.Property(x => x.Name).HasColumnName(@"Name").HasColumnType("nvarchar(max)").IsRequired();
+            builder.Property(x => x.CategoryId).HasColumnName(@"CategoryId").HasColumnType("int").IsRequired();
+
+            // Foreign keys
+            builder.HasOne(a => a.Category).WithMany(b => b.Keywords).HasForeignKey(c => c.CategoryId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Keywords_Categories");
+        }
+    }
+
     // Modules
     public class ModuleConfiguration : IEntityTypeConfiguration<Module>
     {
@@ -898,13 +1020,30 @@ namespace Domain.Database
             builder.Property(x => x.ModuleId).HasColumnName(@"ModuleId").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(x => x.Name).HasColumnName(@"Name").HasColumnType("nvarchar(50)").IsRequired().HasMaxLength(50);
             builder.Property(x => x.Contents).HasColumnName(@"Contents").HasColumnType("nvarchar(max)").IsRequired();
-            builder.Property(x => x.Overview).HasColumnName(@"Overview").HasColumnType("nvarchar(800)").IsRequired(false).HasMaxLength(800);
-            builder.Property(x => x.Keywords).HasColumnName(@"Keywords").HasColumnType("nvarchar(256)").IsRequired().HasMaxLength(256);
+            builder.Property(x => x.Overview).HasColumnName(@"Overview").HasColumnType("nvarchar(800)").IsRequired().HasMaxLength(800);
             builder.Property(x => x.Author).HasColumnName(@"Author").HasColumnType("nvarchar(256)").IsRequired().HasMaxLength(256);
             builder.Property(x => x.ModuleStatusTypeId).HasColumnName(@"ModuleStatusTypeId").HasColumnType("int").IsRequired();
 
             // Foreign keys
             builder.HasOne(a => a.ModuleStatusType).WithMany(b => b.Modules).HasForeignKey(c => c.ModuleStatusTypeId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Modules_ModuleStatusTypes");
+        }
+    }
+
+    // Modules2Keywords
+    public class Modules2KeywordsConfiguration : IEntityTypeConfiguration<Modules2Keywords>
+    {
+        public void Configure(EntityTypeBuilder<Modules2Keywords> builder)
+        {
+            builder.ToTable("Modules2Keywords", "dbo");
+            builder.HasKey(x => x.Module2KeywordId).HasName("PK_Modules2Keywords").IsClustered();
+
+            builder.Property(x => x.Module2KeywordId).HasColumnName(@"Module2KeywordId").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
+            builder.Property(x => x.ModuleId).HasColumnName(@"ModuleId").HasColumnType("int").IsRequired();
+            builder.Property(x => x.KeywordId).HasColumnName(@"KeywordId").HasColumnType("int").IsRequired();
+
+            // Foreign keys
+            builder.HasOne(a => a.Keyword).WithMany(b => b.Modules2Keywords).HasForeignKey(c => c.KeywordId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Modules2Keywords_Keywords");
+            builder.HasOne(a => a.Module).WithMany(b => b.Modules2Keywords).HasForeignKey(c => c.ModuleId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Modules2Keywords_Modules");
         }
     }
 

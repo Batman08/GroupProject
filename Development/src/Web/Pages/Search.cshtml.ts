@@ -32,8 +32,25 @@ class Search {
     //#region GetModuleOptions
 
     private async ServerRequest_GetModuleOptions(): Promise<void> {
-        const dataToServer: string[] = ["Beginning", "Observation", "Wife", "Crime Boss"]; // example data for testing
-        const response: Response = await fetch(`${this._urlGetModuleOptions}&${dataToServer}`, { method: 'GET' });
+        const dataToServer: SearchParam[] = [
+            { CategoryId: 1, Keyword: "Observation" },
+            { CategoryId: 2, Keyword: "Wife" },
+            { CategoryId: 4, Keyword: "Crime Boss" }
+        ];
+
+        //const queryStrParams = dataToServer.flatMap((param: SearchParam, index: number) => [
+        //    `searchParams[${index}].CategoryId=${encodeURIComponent(param.CategoryId)}`,
+        //    `searchParams[${index}].Keyword=${encodeURIComponent(param.Keyword)}`
+        //]).join('&');
+
+        //create query string from dataToServer array
+        const queryStrParams = new URLSearchParams();
+        dataToServer.forEach((param: SearchParam, index: number) => {
+            queryStrParams.append(`searchParams[${index}].CategoryId`, param.CategoryId.toString());
+            queryStrParams.append(`searchParams[${index}].Keyword`, param.Keyword);
+        });
+
+        const response: Response = await fetch(`${this._urlGetModuleOptions}&${queryStrParams}`, { method: 'GET' });
 
         if (response.ok) {
             const dataFromServer = await response.json() as ModuleOptionsDTO;

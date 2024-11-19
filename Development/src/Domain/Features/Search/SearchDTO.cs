@@ -5,6 +5,12 @@
         public int ModuleId { get; set; }
         public string Name { get; set; } = "";
         public string Overview { get; set; } = "";
-        public List<string> Keywords { get; set; } = new List<string>();
+        public List<SearchParam> Keywords { get; set; } = new List<SearchParam>();
+    }
+
+    public class SearchParam
+    {
+        public int CategoryId { get; set; }
+        public string Keyword { get; set; } = "";
     }
 }

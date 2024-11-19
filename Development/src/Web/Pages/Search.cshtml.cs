@@ -18,9 +18,9 @@ namespace Web.Pages
         {
         }
 
-        public JsonResult OnGetModuleOptions([FromQuery] List<string> keywords)
+        public JsonResult OnGetModuleOptions([FromQuery] List<SearchParam> searchParams)
         {
-            var result = _searchQueries.GetModuleOptions(keywords);
+            var result = _searchQueries.GetModuleOptions(searchParams);
             return new JsonResult(new { ModuleOptions = result }, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
     }
