@@ -1,11 +1,11 @@
 using Domain.Features.Search;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
+using Web.Code.Controllers;
 
 namespace Web.Pages
 {
-    public class SearchModel : PageModel
+    public class SearchModel : BaseController
     {
         private readonly ISearchQueries _searchQueries;
 

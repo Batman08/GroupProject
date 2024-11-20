@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Web.Code.Controllers;
 
 namespace Web.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel : BaseController
     {
         public IndexModel()
         {

@@ -19,3 +19,14 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+
+    <script src="~/js/KeywordsGenerator.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            KeywordsGenerator.Init();
+        });
+    </script>
+
+}

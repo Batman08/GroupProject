@@ -22,8 +22,13 @@ class Search {
         new Search().Init();
     }
 
-    private Init(): void {
-        this.ServerRequest_GetModuleOptions();
+    private async Init(): Promise<void> {
+        if (!KeywordsGenerator.Helpers_HasGeneratedKeywords()) {
+            await KeywordsGenerator.Init();
+            console.log("No generated keywords found in local storage.");
+        }
+
+        await this.ServerRequest_GetModuleOptions();
     }
 
     //#endregion
@@ -32,16 +37,10 @@ class Search {
     //#region GetModuleOptions
 
     private async ServerRequest_GetModuleOptions(): Promise<void> {
-        const dataToServer: SearchParam[] = [
-            { CategoryId: 1, Keyword: "Observation" },
-            { CategoryId: 2, Keyword: "Wife" },
-            { CategoryId: 4, Keyword: "Crime Boss" }
-        ];
-
-        //const queryStrParams = dataToServer.flatMap((param: SearchParam, index: number) => [
-        //    `searchParams[${index}].CategoryId=${encodeURIComponent(param.CategoryId)}`,
-        //    `searchParams[${index}].Keyword=${encodeURIComponent(param.Keyword)}`
-        //]).join('&');
+        //get generated keywords from local storage and create an array of SearchParam objects
+        const dataToServer: SearchParam[] = KeywordsGenerator.Helpers_GetGeneratedKeywordsFromStorage().map((keyword: GeneratedKeywordDTO) => {
+            return { CategoryId: keyword.CategoryId, Keyword: keyword.Keyword };
+        });
 
         //create query string from dataToServer array
         const queryStrParams = new URLSearchParams();
