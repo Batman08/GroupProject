@@ -26,7 +26,7 @@ namespace Domain.Features.KeywordGenerator
             foreach (var category in keywordCategories)
             {
                 var categoryKeywords = (from k in QueriesContext.Keywords
-                                        where k.CategoryId == category.CategoryId
+                                        where k.CategoryId == category.CategoryId && category.CategoryName != "Module Position"
                                         select new KeywordDTO
                                         {
                                             CategoryId = k.CategoryId,
