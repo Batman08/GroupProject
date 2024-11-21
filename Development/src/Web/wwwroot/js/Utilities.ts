@@ -29,6 +29,17 @@ class Utilities {
         btnEl.disabled = true;
     }
 
+    public static GetQueryStringValue(key: string): string {
+        const queryParams = new URLSearchParams(window.location.search);
+        return queryParams.get(key) || "";
+    }
+
+    public static StoreCurrentModuleInLocalStorage(moduleName: string): void {
+        const previouslyUsedModules: string[] = this.LocalStorage_LoadItem(this.LocalStorageConstant_PreviouslyUsedModules) || [];
+        previouslyUsedModules.push(moduleName);
+        this.LocalStorage_SetItem(previouslyUsedModules, this.LocalStorageConstant_PreviouslyUsedModules);
+    }
+
     //#endregion
 
     //#region Storage
@@ -56,8 +67,17 @@ class Utilities {
         }
     };
 
+    public static LocalStorage_RemoveItem = (stateName: string) => {
+        try {
+            localStorage.removeItem(stateName);
+        } catch (err) {
+            throw new Error("Can't remove item from local storage.");
+        }
+    };
 
-    public static readonly LocalStorageConstant_GeneratedKeywords: string = "GeneratedKeywords";
+
+    public static readonly LocalStorageConstant_GeneratedKeywords: string = "gp_GeneratedKeywords";
+    public static readonly LocalStorageConstant_PreviouslyUsedModules: string = "gp_PreviouslyUsedModules";
 
     //#endregion
 

@@ -23,6 +23,8 @@ class Search {
     }
 
     private async Init(): Promise<void> {
+        Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_PreviouslyUsedModules); //todo: remove at some point
+
         if (!KeywordsGenerator.Helpers_HasGeneratedKeywords()) {
             await KeywordsGenerator.Init();
             console.log("No generated keywords found in local storage.");

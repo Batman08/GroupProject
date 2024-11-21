@@ -6,7 +6,12 @@
     }
 
     private Init(): void {
-        Utilities.RemoveUrlQueryString(); //this is for when a page refresh is done the options page shows
+        //get the first module ran and store it
+        const moduleId: string = Utilities.GetQueryStringValue("selected");
+        Utilities.StoreCurrentModuleInLocalStorage(moduleId);
+
+        //this is for when a page refresh is done the options page shows
+        Utilities.RemoveUrlQueryString();
     }
 
     //#endregion
