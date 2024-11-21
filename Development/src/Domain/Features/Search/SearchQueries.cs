@@ -33,8 +33,11 @@ namespace Domain.Features.Search
             //get all keywords for each module
             foreach (var module in modules) module.Keywords = GetModuleKeywords(module.ModuleId);
 
+            var modulePositionCategoryId = QueriesContext.Categories.FirstOrDefault(c => c.Name == "Module Position")?.CategoryId;
+
             //filter modules based on search params and return 2 modules
-            var filteredModules = modules.Where(m => searchParams.Any(sp => m.Keywords.Any(k => k.CategoryId == sp.CategoryId && k.Keyword.Contains(sp.Keyword))))
+            var filteredModules = modules.Where(m => searchParams.Any(sp => m.Keywords.Any(k => k.CategoryId == sp.CategoryId && k.Keyword.Contains(sp.Keyword)))
+                                                     && m.Keywords.Any(k => k.CategoryId == modulePositionCategoryId && k.Keyword == "Beginning"))
                       .Take(2)
                       .ToList();
 
