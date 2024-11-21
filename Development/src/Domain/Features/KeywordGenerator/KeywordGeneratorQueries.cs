@@ -1,11 +1,12 @@
 ﻿using Domain.Common;
 using Domain.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Features.KeywordGenerator
 {
     public interface IKeywordGeneratorQueries
     {
-        List<KeywordDTO> GetKeywords();
+        Task<List<KeywordDTO>> GetKeywords();
     }
 
     public class KeywordGeneratorQueries : QueriesBase, IKeywordGeneratorQueries, IGpScoped
@@ -17,21 +18,21 @@ namespace Domain.Features.KeywordGenerator
             _cachingSystem = cachingSystem;
         }
 
-        public List<KeywordDTO> GetKeywords()
+        public async Task<List<KeywordDTO>> GetKeywords()
         {
-            var keywordCategories = GetAllKeywordCategories();
+            var keywordCategories = GetAllKeywordCategories().Result;
 
             //for each of these categories, get all the keywords for it then randomly select one of them
             var keywords = new List<KeywordDTO>();
             foreach (var category in keywordCategories)
             {
-                var categoryKeywords = (from k in QueriesContext.Keywords
-                                        where k.CategoryId == category.CategoryId && category.CategoryName != "Module Position"
-                                        select new KeywordDTO
-                                        {
-                                            CategoryId = k.CategoryId,
-                                            Keyword = k.Name
-                                        }).ToList();
+                var categoryKeywords = await (from k in QueriesContext.Keywords
+                                              where k.CategoryId == category.CategoryId && category.CategoryName != "Module Position"
+                                              select new KeywordDTO
+                                              {
+                                                  CategoryId = k.CategoryId,
+                                                  Keyword = k.Name
+                                              }).ToListAsync();
 
                 bool categoryHasKeywords = categoryKeywords.Count > 0;
                 if (categoryHasKeywords)
@@ -45,16 +46,16 @@ namespace Domain.Features.KeywordGenerator
             return keywords;
         }
 
-        private List<CategoryDTO> GetAllKeywordCategories()
+        private Task<List<CategoryDTO>> GetAllKeywordCategories()
         {
-            var keywordCategories = _cachingSystem.GetOrSet(CacheConstants.KeywordCategoriesData, () =>
+            var keywordCategories = _cachingSystem.GetOrSet(CacheConstants.KeywordCategoriesData, async () =>
             {
-                return (from c in QueriesContext.Categories
-                        select new CategoryDTO
-                        {
-                            CategoryId = c.CategoryId,
-                            CategoryName = c.Name
-                        }).ToList();
+                return await (from c in QueriesContext.Categories
+                              select new CategoryDTO
+                              {
+                                  CategoryId = c.CategoryId,
+                                  CategoryName = c.Name
+                              }).ToListAsync();
             }, TimeSpan.FromMinutes(50));
 
             return keywordCategories;

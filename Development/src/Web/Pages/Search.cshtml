@@ -106,8 +106,8 @@
     <script src="~/js/KeywordsGenerator.js" asp-append-version="true"></script>
     <script src="~/Pages/Search.cshtml.js" asp-append-version="true"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            Search.Init();
+        document.addEventListener('DOMContentLoaded', async () => {
+            await Search.Init();
         });
     </script>
 

@@ -18,9 +18,9 @@ namespace Web.Pages
         {
         }
 
-        public JsonResult OnGetModuleOptions([FromQuery] List<SearchParam> searchParams)
+        public async Task<JsonResult> OnGetModuleOptions([FromQuery] List<SearchParam> searchParams)
         {
-            var result = _searchQueries.GetModuleOptions(searchParams);
+            var result = await _searchQueries.GetModuleOptions(searchParams);
             return new JsonResult(new { ModuleOptions = result }, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
     }

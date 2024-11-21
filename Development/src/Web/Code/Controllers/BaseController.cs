@@ -11,10 +11,10 @@ namespace Web.Code.Controllers
         {
         }
 
-        public JsonResult OnGetGenerateKeywords()
+        public async Task<JsonResult> OnGetGenerateKeywords()
         {
             var keywordGeneratorQueriesService = HttpContext.RequestServices.GetService<IKeywordGeneratorQueries>()!;
-            var keywordsData = keywordGeneratorQueriesService.GetKeywords();
+            var keywordsData = await keywordGeneratorQueriesService.GetKeywords();
             return new JsonResult(new { KeywordsData = keywordsData }, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
     }

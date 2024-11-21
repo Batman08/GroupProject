@@ -18,8 +18,8 @@ class Search {
 
     //#region Init
 
-    public static Init(): void {
-        new Search().Init();
+    public static async Init(): Promise<void> {
+        await new Search().Init();
     }
 
     private async Init(): Promise<void> {

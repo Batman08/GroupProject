@@ -68,18 +68,3 @@ class KeywordsGenerator {
 
     //#endregion
 }
-
-/*
-How this works:
-    1. Randomly determine number of categories we want to generate for.
-    2. Randomly determine what each of the categories are.
-    3. Randomly determine the keyword for each of the categories chosen.
-    4. Store in local storage.
-*/
-
-
-/*
-How this works:
-    1. Randomly determine the keyword for each category we have.
-    2. Store in local storage.
-*/

@@ -41,8 +41,8 @@
 
     <script src="~/Pages/StoryModule.cshtml.js" asp-append-version="true"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            StoryModule.Init();
+        document.addEventListener('DOMContentLoaded', async () => {
+            await StoryModule.Init();
         });
     </script>
 
