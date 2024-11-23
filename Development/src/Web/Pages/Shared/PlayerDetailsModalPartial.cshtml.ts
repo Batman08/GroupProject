@@ -1,9 +1,7 @@
 ﻿class PlayerDetailsModal {
     //#region Controls
 
-    private readonly _divPlayerDetailsModal = document.getElementById('divPlayerDetailsModal') as HTMLDivElement;
-    private readonly _playerDetailsModal = new bootstrap.Modal(this._divPlayerDetailsModal) as bootstrap.Modal;
-    private readonly _formSavePlayerDetails = this._divPlayerDetailsModal.querySelector('#formSavePlayerDetails') as HTMLFormElement;
+    private readonly _formSavePlayerDetails = _Layout._divPlayerDetailsModal.querySelector('#formSavePlayerDetails') as HTMLFormElement;
     private readonly _inputPlayerName = this._formSavePlayerDetails.querySelector('#inputPlayerName') as HTMLInputElement;
     private readonly _inputPlayerPronoun = this._formSavePlayerDetails.querySelector('#inputPlayerPronoun') as HTMLInputElement;
 
@@ -65,8 +63,14 @@
 
     private BindOnHidden_PlayerDetailsModal(): void {
         //when modal is closed load reload form inputs
-        this._divPlayerDetailsModal.addEventListener('hidden.bs.modal', () => {
-            this.LoadPlayerDetails()
+        _Layout._divPlayerDetailsModal.addEventListener('hidden.bs.modal', () => {
+            if (!Utilities.IsPlayerDetailsInStorage()) {
+                _Layout._playerDetailsModal.toggle();
+            }
+            else {
+                this.LoadPlayerDetails()
+            }
+
             this.Helpers_ValidateFormInput(this._inputPlayerName);
             this.Helpers_ValidateFormInput(this._inputPlayerPronoun);
         });
@@ -117,7 +121,7 @@
         Utilities.LocalStorage_SetItem(extractedData, Utilities.LocalStorageConstant_PlayerDetails);
 
         //hide modal
-        this._playerDetailsModal.hide();
+        _Layout._playerDetailsModal.hide();
     }
 
     //#endregion
