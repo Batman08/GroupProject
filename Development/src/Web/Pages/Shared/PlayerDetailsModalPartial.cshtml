@@ -1,0 +1,45 @@
+﻿@* Player Details Modal *@
+
+<div class="modal fade" id="divPlayerDetailsModal" tabindex="-1" aria-labelledby="playerDetailsModalLabel" aria-hidden="true">
+    <form id="formSavePlayerDetails">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="playerDetailsModalLabel"><i class="fa-solid fa-user"></i> Player Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    @* Name *@
+
+                    <div id="PlayerNameErrorMsg" class="text-danger fw-bold ps-1 pb-2" style="display:none;"><i class="fa-solid fa-circle-exclamation"></i> Please enter a name</div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="inputPlayerName" name="PlayerName" placeholder="">
+                        <label for="inputPlayerName">Name</label>
+                    </div>
+
+
+                    @* Pronoun *@
+
+                    <div id="PlayerPronounErrorMsg" class="text-danger fw-bold ps-1 pb-2" style="display:none;"><i class="fa-solid fa-circle-exclamation"></i> Please enter a pronoun</div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="inputPlayerPronoun" name="PlayerPronoun" placeholder="">
+                        <label for="inputPlayerPronoun">Pronoun</label>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-ban"></i> Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="~/Pages/Shared/PlayerDetailsModalPartial.cshtml.js" asp-append-version="true"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        PlayerDetailsModal.Init();
+    });
+</script>

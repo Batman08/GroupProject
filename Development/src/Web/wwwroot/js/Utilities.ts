@@ -34,6 +34,10 @@ class Utilities {
         return queryParams.get(key) || "";
     }
 
+    public static HasNoValue(inputVal: string): boolean {
+        return inputVal === null || inputVal === undefined || inputVal === '';
+    }
+
     public static StoreCurrentModuleInLocalStorage(moduleName: string): void {
         const previouslyUsedModules: string[] = this.LocalStorage_LoadItem(this.LocalStorageConstant_PreviouslyUsedModules) || [];
         previouslyUsedModules.push(moduleName);
@@ -78,6 +82,7 @@ class Utilities {
 
     public static readonly LocalStorageConstant_GeneratedKeywords: string = "gp_GeneratedKeywords";
     public static readonly LocalStorageConstant_PreviouslyUsedModules: string = "gp_PreviouslyUsedModules";
+    public static readonly LocalStorageConstant_PlayerDetails: string = "gp_PlayerDetails";
 
     //#endregion
 

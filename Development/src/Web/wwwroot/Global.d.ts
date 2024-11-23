@@ -6,3 +6,8 @@
 type GeneratedKeywordsDTO = {
     KeywordsData: GeneratedKeywordDTO[];
 }
+
+type PlayerDetailsDTO = {
+    Name: string;
+    Pronoun: string;
+}
