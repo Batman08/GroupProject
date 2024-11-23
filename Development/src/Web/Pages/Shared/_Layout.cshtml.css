@@ -10,12 +10,12 @@
     text-shadow: 1px 1px 5px rgb(255 255 255 / 65%);
 }
 
-.gp-shadow {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2) !important;
+.lyt-box-shadow {
+    box-shadow: 3px 4px 5px 0 rgba(0, 0, 0, 0.25) !important;
 }
 
-.gp-btn-shadow {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+.lyt-btn-shadow {
+    box-shadow: 3px 4px 5px 0 rgb(0 0 0 / 25%);
 }
 
 .lyt-line-space {
