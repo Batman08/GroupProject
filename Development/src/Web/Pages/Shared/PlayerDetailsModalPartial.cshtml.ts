@@ -78,10 +78,14 @@
     //#region LoadPlayerDetails
 
     public LoadPlayerDetails(): void {
-        const playerDetails = Utilities.LocalStorage_LoadItem(Utilities.LocalStorageConstant_PlayerDetails) as PlayerDetailsDTO;
-        if (playerDetails !== null && playerDetails !== undefined) {
+        if (Utilities.IsPlayerDetailsInStorage()) {
+            const playerDetails: PlayerDetailsDTO = Utilities.GetPlayerDetailsFromStorage();
             this._inputPlayerName.value = playerDetails.Name;
             this._inputPlayerPronoun.value = playerDetails.Pronoun;
+        }
+        else {
+            this._inputPlayerName.value = '';
+            this._inputPlayerPronoun.value = '';
         }
     }
 

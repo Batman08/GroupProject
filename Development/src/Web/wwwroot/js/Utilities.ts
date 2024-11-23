@@ -44,6 +44,15 @@ class Utilities {
         this.LocalStorage_SetItem(previouslyUsedModules, this.LocalStorageConstant_PreviouslyUsedModules);
     }
 
+    public static GetPlayerDetailsFromStorage(): PlayerDetailsDTO {
+        return this.LocalStorage_LoadItem(this.LocalStorageConstant_PlayerDetails) as PlayerDetailsDTO;
+    }
+
+    public static IsPlayerDetailsInStorage(): boolean {
+        const playerDetails = Utilities.GetPlayerDetailsFromStorage();
+        return playerDetails !== null && playerDetails !== undefined;
+    }
+
     //#endregion
 
     //#region Storage
