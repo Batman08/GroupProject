@@ -65,6 +65,8 @@
         //when modal is closed load reload form inputs
         _Layout._divPlayerDetailsModal.addEventListener('hidden.bs.modal', () => {
             if (!Utilities.IsPlayerDetailsInStorage()) {
+                this._inputPlayerName.value = '';
+                this._inputPlayerPronoun.value = '';
                 _Layout._playerDetailsModal.toggle();
             }
             else {
@@ -120,8 +122,17 @@
         //save data to local storage
         Utilities.LocalStorage_SetItem(extractedData, Utilities.LocalStorageConstant_PlayerDetails);
 
+        //dispatch event
+        this.DispatchEvent_PlayerDetails_SaveSuccess();
+
         //hide modal
         _Layout._playerDetailsModal.hide();
+    }
+
+    private DispatchEvent_PlayerDetails_SaveSuccess(): void {
+        const eventType: PlayerDetailsSaveEventType = "gp_event_PlayerDetails_SaveSuccess";
+        const epEvent = new CustomEvent(eventType, { bubbles: true });
+        document.body.dispatchEvent(epEvent);
     }
 
     //#endregion

@@ -13,7 +13,8 @@
                 <img src="~/images/SiteLogo.png" alt="Magnifying Glass" width="250">
 
                 <div class="mt-5">
-                    <a asp-area="" asp-page="/Search" class="btn btn-secondary btn-lg fw-bold p-4">Begin your adventure</a>
+                    <button id="btnStartGame" type="button" class="btn btn-secondary btn-lg fw-bold fw-bold p-4">Begin your adventure</button>
+                    @* <a asp-area="" asp-page="/Search" class="btn btn-secondary btn-lg fw-bold p-4">Begin your adventure</a> *@
                 </div>
             </div>
         </div>
@@ -23,9 +24,10 @@
 @section Scripts {
 
     <script src="~/js/KeywordsGenerator.js" asp-append-version="true"></script>
+    <script src="~/Pages/Index.cshtml.js" asp-append-version="true"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            await KeywordsGenerator.Init();
+            await Index.Init();
         });
     </script>
 

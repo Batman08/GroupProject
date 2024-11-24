@@ -23,6 +23,8 @@ class Search {
     }
 
     private async Init(): Promise<void> {
+        this.ConsumeEvent_PlayerDetails_SaveSuccess();
+
         Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_PreviouslyUsedModules); //todo: remove at some point
 
         if (!KeywordsGenerator.Helpers_HasGeneratedKeywords()) {
@@ -30,7 +32,20 @@ class Search {
             console.log("No generated keywords found in local storage.");
         }
 
-        await this.ServerRequest_GetModuleOptions();
+        if (!Utilities.IsPlayerDetailsInStorage()) {
+            _Layout._playerDetailsModal.show();
+        }
+        else {
+            await this.ServerRequest_GetModuleOptions();
+        }
+
+    }
+
+    private ConsumeEvent_PlayerDetails_SaveSuccess(): void {
+        const eventType: PlayerDetailsSaveEventType = "gp_event_PlayerDetails_SaveSuccess";
+        document.addEventListener(eventType, async (ev: CustomEvent) => {
+            await this.ServerRequest_GetModuleOptions();
+        });
     }
 
     //#endregion

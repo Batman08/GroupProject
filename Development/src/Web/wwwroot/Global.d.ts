@@ -11,3 +11,5 @@ type PlayerDetailsDTO = {
     Name: string;
     Pronoun: string;
 }
+
+type PlayerDetailsSaveEventType = "gp_event_PlayerDetails_SaveSuccess";
