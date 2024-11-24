@@ -29,19 +29,14 @@
     }
 
     private BindClickDone_StartGame(ev: MouseEvent) {
-        if (Utilities.IsPlayerDetailsInStorage()) {
-            //take user to game page /Search
-            window.location.href = '/Search';
-        }
-        else {
-            _Layout._playerDetailsModal.show();
-        }
+        if (Utilities.IsPlayerDetailsInStorage()) window.location.href = '/Search';
+        else _Layout._playerDetailsModal.show();
     }
 
     private ConsumeEvent_PlayerDetails_SaveSuccess(): void {
         const eventType: PlayerDetailsSaveEventType = "gp_event_PlayerDetails_SaveSuccess";
         document.addEventListener(eventType, (ev: CustomEvent) => {
-            //take user to game page /Search
+            //take user to module selection page ('/Search') after saving player details
             window.location.href = '/Search';
         });
     }

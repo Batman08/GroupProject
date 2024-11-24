@@ -38,8 +38,12 @@ class Search {
         else {
             await this.ServerRequest_GetModuleOptions();
         }
-
     }
+
+    //#endregion
+
+
+    //#region Events
 
     private ConsumeEvent_PlayerDetails_SaveSuccess(): void {
         const eventType: PlayerDetailsSaveEventType = "gp_event_PlayerDetails_SaveSuccess";
