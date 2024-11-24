@@ -45,20 +45,26 @@
     //#region PlayerDetailsModal Events
 
     private BindEvents(): void {
-        this.BindOnKeyupEvents_PlayerDetailsModalInputs();
-        this.BindOnChangeEvents_PlayerDetailsModalInputs();
-        this.BindOnHidden_PlayerDetailsModal();
-        this.BindSubmit_SavePlayerDetails();
-    }
+        /* OnKeyup Events */
 
-    private BindOnChangeEvents_PlayerDetailsModalInputs(): void {
-        this._inputPlayerName.onchange = (ev: Event) => this.Helpers_ValidateFormInput(this._inputPlayerName);
-        this._inputPlayerPronoun.onchange = (ev: Event) => this.Helpers_ValidateFormInput(this._inputPlayerPronoun);
-    }
-
-    private BindOnKeyupEvents_PlayerDetailsModalInputs(): void {
         this._inputPlayerName.onkeyup = (ev: Event) => this.Helpers_ValidateFormInput(this._inputPlayerName);
         this._inputPlayerPronoun.onkeyup = (ev: Event) => this.Helpers_ValidateFormInput(this._inputPlayerPronoun);
+
+
+        /* OnChange Events */
+
+        this._inputPlayerName.onchange = (ev: Event) => this.Helpers_ValidateFormInput(this._inputPlayerName);
+        this._inputPlayerPronoun.onchange = (ev: Event) => this.Helpers_ValidateFormInput(this._inputPlayerPronoun);
+
+
+        /* Submit Events */
+
+        this.BindSubmit_SavePlayerDetails();
+
+
+        /* Modal Hidden Events */
+
+        this.BindOnHidden_PlayerDetailsModal();
     }
 
     private BindOnHidden_PlayerDetailsModal(): void {
