@@ -6,7 +6,7 @@ namespace Domain.Features.Search
 {
     public interface ISearchQueries
     {
-        Task<List<ModuleOverviewDTO>> GetModuleOptions(List<SearchParam> searchParams);
+        Task<List<ModuleOptionDTO>> GetModuleOptions(List<SearchParam> searchParams);
     }
 
     public class SearchQueries : QueriesBase, ISearchQueries, IGpScoped
@@ -18,17 +18,17 @@ namespace Domain.Features.Search
 
         #region GetModuleOptions
 
-        public async Task<List<ModuleOverviewDTO>> GetModuleOptions(List<SearchParam> searchParams)
+        public async Task<List<ModuleOptionDTO>> GetModuleOptions(List<SearchParam> searchParams)
         {
             //get all modules
             var modules = await (from m in QueriesContext.Modules
                                  join mst in QueriesContext.ModuleStatusTypes on m.ModuleStatusTypeId equals mst.ModuleStatusTypeId
                                  where mst.ModuleStatusTypeId == (int)ModuleStatusTypeEnum.Published
-                                 select new ModuleOverviewDTO
+                                 select new ModuleOptionDTO
                                  {
                                      ModuleId = m.ModuleId,
                                      Name = m.Name,
-                                     Overview = m.Overview,
+                                     Contents = m.Contents,
                                  }).ToListAsync();
 
             //get all keywords for each module

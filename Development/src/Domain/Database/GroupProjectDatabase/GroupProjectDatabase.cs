@@ -907,7 +907,6 @@ namespace Domain.Database
         public int ModuleId { get; set; } // ModuleId (Primary key)
         public string Name { get; set; } // Name (length: 50)
         public string Contents { get; set; } // Contents
-        public string Overview { get; set; } // Overview (length: 800)
         public string Author { get; set; } // Author (length: 256)
         public int ModuleStatusTypeId { get; set; } // ModuleStatusTypeId
 
@@ -1020,7 +1019,6 @@ namespace Domain.Database
             builder.Property(x => x.ModuleId).HasColumnName(@"ModuleId").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(x => x.Name).HasColumnName(@"Name").HasColumnType("nvarchar(50)").IsRequired().HasMaxLength(50);
             builder.Property(x => x.Contents).HasColumnName(@"Contents").HasColumnType("nvarchar(max)").IsRequired();
-            builder.Property(x => x.Overview).HasColumnName(@"Overview").HasColumnType("nvarchar(800)").IsRequired().HasMaxLength(800);
             builder.Property(x => x.Author).HasColumnName(@"Author").HasColumnType("nvarchar(256)").IsRequired().HasMaxLength(256);
             builder.Property(x => x.ModuleStatusTypeId).HasColumnName(@"ModuleStatusTypeId").HasColumnType("int").IsRequired();
 

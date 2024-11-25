@@ -6,7 +6,7 @@
 type ModuleOptionDTO = {
     ModuleId: number;
     Name: string;
-    Overview: string;
+    Contents: string;
     Keywords: SearchParam[];
 }
 
