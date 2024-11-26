@@ -21,7 +21,13 @@ namespace Domain.Features.StoryModule
         {
             var module = (from m in QueriesContext.Modules
                           join mst in QueriesContext.ModuleStatusTypes on m.ModuleStatusTypeId equals mst.ModuleStatusTypeId
+                          join m2k in QueriesContext.Modules2Keywords on m.ModuleId equals m2k.ModuleId
+                          join k in QueriesContext.Keywords on m2k.KeywordId equals k.KeywordId
+                          join c in QueriesContext.Categories on k.CategoryId equals c.CategoryId
                           where m.ModuleId == moduleId && mst.ModuleStatusTypeId == (int)ModuleStatusTypeEnum.Published
+                             && mst.ModuleStatusTypeId == (int)ModuleStatusTypeEnum.Published
+                             && c.Name == "Module Position"
+                             && k.Name == "Beginning"
                           select new ModuleDTO
                           {
                               ModuleId = m.ModuleId,
@@ -43,10 +49,9 @@ namespace Domain.Features.StoryModule
                                           join m2k in QueriesContext.Modules2Keywords on m.ModuleId equals m2k.ModuleId
                                           join k in QueriesContext.Keywords on m2k.KeywordId equals k.KeywordId
                                           join c in QueriesContext.Categories on k.CategoryId equals c.CategoryId
-                                          where !parsedUsedModuleIds.Contains(m.ModuleId)
-                                          && mst.ModuleStatusTypeId == (int)ModuleStatusTypeEnum.Published
-                                          && c.Name == "Module Position"
-                                          && k.Name == "Middle"
+                                          where !parsedUsedModuleIds.Contains(m.ModuleId) && mst.ModuleStatusTypeId == (int)ModuleStatusTypeEnum.Published
+                                             && c.Name == "Module Position"
+                                             && k.Name == "Middle"
                                           select new ModuleDTO
                                           {
                                               ModuleId = m.ModuleId,
