@@ -29,17 +29,16 @@ class StoryModule {
         //this is for when a page refresh is done the options page shows
         //Utilities.RemoveUrlQueryString();
 
-        this.BindClick_InitialModule();
+        this.BindClick_InitialModuleContinue();
     }
 
     //#endregion
 
 
-    //#region InitalModule
+    //#region InitalModuleContinue
 
-    private BindClick_InitialModule() {
+    private BindClick_InitialModuleContinue() {
         const btnContinue = this._container.querySelector('#btnContinue') as HTMLButtonElement;
-
         btnContinue.onclick = async (ev: MouseEvent) => {
             Utilities.DisableBtn(btnContinue);
             btnContinue.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Please Wait...`;
@@ -47,19 +46,6 @@ class StoryModule {
             await this.ServerRequest_GetMiddleModule();
         };
     }
-
-    //private BindClick_InitialModule() {
-    //    const btnChoices = this._container.querySelectorAll('button[stmModuleChoiceType]') as NodeListOf<HTMLButtonElement>;
-
-    //    btnChoices.forEach(btnChoice => {
-    //        const choiceType: string = btnChoice.getAttribute('stmModuleChoiceType');
-    //        const choiceResult: string = btnChoice.getAttribute('stmModuleChoiceResult');
-
-    //        btnChoice.onclick = (ev: MouseEvent) => {
-    //            console.log(choiceType, choiceResult);
-    //        };
-    //    });
-    //}
 
     //#endregion
 
