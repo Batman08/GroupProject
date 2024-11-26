@@ -2,7 +2,6 @@ using Domain.Common;
 using Domain.Features.StoryModule;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Text.Json;
 
 namespace Web.Pages
 {
@@ -27,13 +26,6 @@ namespace Web.Pages
 
             return Page();
         }
-
-        public async Task<JsonResult> OnGetMiddleModule([FromQuery] List<string> usedModulesParam)
-        {
-            var result = await _storyModuleQueries.GetMiddleModule(usedModulesParam);
-            return new JsonResult(new { MiddleModule = result }, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-        }
-
 
         private int? ExtractModuleId(string selectedModuleIdStr)
         {
