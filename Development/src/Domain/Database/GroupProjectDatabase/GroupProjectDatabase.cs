@@ -1023,10 +1023,10 @@ namespace Domain.Database
             builder.Property(x => x.ModuleId).HasColumnName(@"ModuleId").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(x => x.Name).HasColumnName(@"Name").HasColumnType("nvarchar(50)").IsRequired().HasMaxLength(50);
             builder.Property(x => x.Contents).HasColumnName(@"Contents").HasColumnType("nvarchar(max)").IsRequired();
-            builder.Property(x => x.PassChoiceText).HasColumnName(@"PassChoiceText").HasColumnType("nvarchar(max)").IsRequired(false);
-            builder.Property(x => x.PassChoiceResult).HasColumnName(@"PassChoiceResult").HasColumnType("nvarchar(max)").IsRequired(false);
-            builder.Property(x => x.FailChoiceText).HasColumnName(@"FailChoiceText").HasColumnType("nvarchar(max)").IsRequired(false);
-            builder.Property(x => x.FailChoiceResult).HasColumnName(@"FailChoiceResult").HasColumnType("nvarchar(max)").IsRequired(false);
+            builder.Property(x => x.PassChoiceText).HasColumnName(@"PassChoiceText").HasColumnType("nvarchar(max)").IsRequired();
+            builder.Property(x => x.PassChoiceResult).HasColumnName(@"PassChoiceResult").HasColumnType("nvarchar(max)").IsRequired();
+            builder.Property(x => x.FailChoiceText).HasColumnName(@"FailChoiceText").HasColumnType("nvarchar(max)").IsRequired();
+            builder.Property(x => x.FailChoiceResult).HasColumnName(@"FailChoiceResult").HasColumnType("nvarchar(max)").IsRequired();
             builder.Property(x => x.Author).HasColumnName(@"Author").HasColumnType("nvarchar(256)").IsRequired().HasMaxLength(256);
             builder.Property(x => x.ModuleStatusTypeId).HasColumnName(@"ModuleStatusTypeId").HasColumnType("int").IsRequired();
 
