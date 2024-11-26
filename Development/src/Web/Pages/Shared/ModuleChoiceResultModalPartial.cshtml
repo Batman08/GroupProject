@@ -1,0 +1,42 @@
+﻿<div id="moduleChoiceResultModalContainer">
+
+    @* Result Pass Modal *@
+
+    <div class="modal fade" id="divResultPassModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="resultPassModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header shadow">
+                    <h1 class="modal-title fs-5" id="resultPassModalLabel">Choice Outcome</h1>
+                </div>
+                <div id="divChoiceResult" class="modal-body">
+                    Pass
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-success lyt-btn-shadow" data-bs-dismiss="modal"><i class="fa-solid fa-ban"></i> Close</button>
+                    <button type="button" class="btn btn-success lyt-btn-shadow">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @* Result Fail Modal *@
+
+    <div class="modal fade" id="divResultFailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="resultFailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header shadow">
+                    <h1 class="modal-title fs-5" id="resultFailModalLabel">Choice Outcome</h1>
+                </div>
+                <div id="divChoiceResult" class="modal-body">
+                    Fail
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary lyt-btn-shadow" data-bs-dismiss="modal"><i class="fa-solid fa-ban"></i> Close</button>
+                    <button type="button" class="btn btn-secondary lyt-btn-shadow">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

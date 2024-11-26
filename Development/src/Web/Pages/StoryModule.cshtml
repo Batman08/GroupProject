@@ -32,6 +32,8 @@
     </div>
 </div>
 
+<partial name="~/Pages/Shared/ModuleChoiceResultModalPartial.cshtml" />
+
 
 @section ElementTemplates {
 
@@ -45,9 +47,11 @@
 
 @section Scripts {
 
+    <script src="~/Pages/Shared/ModuleChoiceResultModalPartial.cshtml.js" asp-append-version="true"></script>
     <script src="~/Pages/StoryModule.cshtml.js" asp-append-version="true"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
+            ModuleChoiceResultModal.Init();
             await StoryModule.Init();
         });
     </script>

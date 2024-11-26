@@ -13,3 +13,9 @@ type MiddleModuleDTO = {
 type MiddleModuleResponseDTO = {
     MiddleModule: MiddleModuleDTO;
 }
+
+type ModuleChoiceSelectedEventType = "gp_event_ModuleChoice_Selected"
+type ModuleChoiceSelectedEvent = {
+    ChoiceType: string;
+    ChoiceResult: string;
+}

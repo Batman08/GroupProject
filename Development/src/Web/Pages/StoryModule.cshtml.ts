@@ -99,11 +99,18 @@ class StoryModule {
             btnModuleChoice.removeAttribute("id");
             btnModuleChoice.textContent = choiceBtnText;
             btnModuleChoice.onclick = (ev: MouseEvent) => {
-                alert(choiceResult);
+                this.DispatchEvent_ModuleChoiceResult_Selected(choiceType, choiceResult);
             };
 
             divModuleChoices.appendChild(moduleOptionEl);
         }
+    }
+
+    private DispatchEvent_ModuleChoiceResult_Selected(choiceType: string, choiceResult): void {
+        const eventType: ModuleChoiceSelectedEventType = "gp_event_ModuleChoice_Selected";
+        const eventData: ModuleChoiceSelectedEvent = { ChoiceType: choiceType, ChoiceResult: choiceResult };
+        const gpEvent = new CustomEvent(eventType, { bubbles: true, detail: eventData });
+        document.body.dispatchEvent(gpEvent);
     }
 
     //#endregion

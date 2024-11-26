@@ -137,8 +137,8 @@
 
     private DispatchEvent_PlayerDetails_SaveSuccess(): void {
         const eventType: PlayerDetailsSaveEventType = "gp_event_PlayerDetails_SaveSuccess";
-        const epEvent = new CustomEvent(eventType, { bubbles: true });
-        document.body.dispatchEvent(epEvent);
+        const gpEvent = new CustomEvent(eventType, { bubbles: true });
+        document.body.dispatchEvent(gpEvent);
     }
 
     //#endregion
