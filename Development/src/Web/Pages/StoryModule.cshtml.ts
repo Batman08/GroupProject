@@ -54,8 +54,16 @@ class StoryModule {
     //#region GetMiddleModule
 
     private async ServerRequest_GetMiddleModule(): Promise<void> {
-        const dataToServer: UsedModulesDTO = Utilities.LocalStorage_LoadItem(Utilities.LocalStorageConstant_PreviouslyUsedModules) as string[];
-        const response: Response = await fetch(`${this._urlGetMiddleModule}&${dataToServer}`, { method: 'GET' });
+        let dataToServer: UsedModulesDTO = Utilities.LocalStorage_LoadItem(Utilities.LocalStorageConstant_PreviouslyUsedModules) as string[];
+        dataToServer = dataToServer !== undefined ? dataToServer : [];
+
+        //create query string from dataToServer array
+        const queryStrParams = new URLSearchParams();
+        dataToServer.forEach((param: string) => {
+            queryStrParams.append(`usedModulesParam`, param);
+        });
+
+        const response: Response = await fetch(`${this._urlGetMiddleModule}&${queryStrParams}`, { method: 'GET' });
 
         if (response.ok) {
             const dataFromServer = await response.json() as MiddleModuleResponseDTO;
@@ -116,7 +124,7 @@ class StoryModule {
 
     private ConsumeEvent_ModuleChoicePass_BtnContinue(): void {
         const eventType: ModuleChoicePassBtnContinueEventType = "gp_event_ModuleChoicePass_BtnContinue";
-        document.addEventListener(eventType, async (ev: CustomEvent)=> {
+        document.addEventListener(eventType, async (ev: CustomEvent) => {
             const detail: ModuleChoicePassBtnContinueEvent = ev.detail;
 
             await this.ServerRequest_GetMiddleModule();
