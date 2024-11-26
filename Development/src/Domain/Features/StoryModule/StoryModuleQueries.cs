@@ -31,7 +31,6 @@ namespace Domain.Features.StoryModule
                           select new ModuleDTO
                           {
                               ModuleId = m.ModuleId,
-                              Name = m.Name,
                               Contents = m.Contents
                           }).FirstOrDefault();
 
@@ -55,7 +54,6 @@ namespace Domain.Features.StoryModule
                                           select new ModuleDTO
                                           {
                                               ModuleId = m.ModuleId,
-                                              Name = m.Name,
                                               Contents = m.Contents,
                                               PassChoiceText = m.PassChoiceText,
                                               PassChoiceResult = m.PassChoiceResult,

@@ -2,7 +2,6 @@
 
 type MiddleModuleDTO = {
     ModuleId: number;
-    Name: string;
     Contents: string;
     PassChoiceText: string;
     PassChoiceResult: string;

@@ -905,7 +905,6 @@ namespace Domain.Database
     public class Module
     {
         public int ModuleId { get; set; } // ModuleId (Primary key)
-        public string Name { get; set; } // Name (length: 50)
         public string Contents { get; set; } // Contents
         public string PassChoiceText { get; set; } // PassChoiceText
         public string PassChoiceResult { get; set; } // PassChoiceResult
@@ -1021,7 +1020,6 @@ namespace Domain.Database
             builder.HasKey(x => x.ModuleId).HasName("PK_Modules").IsClustered();
 
             builder.Property(x => x.ModuleId).HasColumnName(@"ModuleId").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
-            builder.Property(x => x.Name).HasColumnName(@"Name").HasColumnType("nvarchar(50)").IsRequired().HasMaxLength(50);
             builder.Property(x => x.Contents).HasColumnName(@"Contents").HasColumnType("nvarchar(max)").IsRequired();
             builder.Property(x => x.PassChoiceText).HasColumnName(@"PassChoiceText").HasColumnType("nvarchar(max)").IsRequired();
             builder.Property(x => x.PassChoiceResult).HasColumnName(@"PassChoiceResult").HasColumnType("nvarchar(max)").IsRequired();

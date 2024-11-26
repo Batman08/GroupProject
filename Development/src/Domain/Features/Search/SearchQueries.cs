@@ -27,7 +27,6 @@ namespace Domain.Features.Search
                                  select new ModuleOptionDTO
                                  {
                                      ModuleId = m.ModuleId,
-                                     Name = m.Name,
                                      Contents = m.Contents,
                                  }).ToListAsync();
 

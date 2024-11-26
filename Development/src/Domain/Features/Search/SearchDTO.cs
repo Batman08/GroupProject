@@ -3,7 +3,6 @@
     public class ModuleOptionDTO
     {
         public int ModuleId { get; set; }
-        public string Name { get; set; } = "";
         public string Contents { get; set; } = "";
         public List<SearchParam> Keywords { get; set; } = new List<SearchParam>();
     }
