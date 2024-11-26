@@ -30,6 +30,7 @@ class StoryModule {
         //Utilities.RemoveUrlQueryString();
 
         this.BindClick_InitialModuleContinue();
+        this.ConsumeEvent_ModuleChoicePass_BtnContinue();
     }
 
     //#endregion
@@ -111,6 +112,17 @@ class StoryModule {
         const eventData: ModuleChoiceSelectedEvent = { ChoiceType: choiceType, ChoiceResult: choiceResult };
         const gpEvent = new CustomEvent(eventType, { bubbles: true, detail: eventData });
         document.body.dispatchEvent(gpEvent);
+    }
+
+    private ConsumeEvent_ModuleChoicePass_BtnContinue(): void {
+        const eventType: ModuleChoicePassBtnContinueEventType = "gp_event_ModuleChoicePass_BtnContinue";
+        document.addEventListener(eventType, async (ev: CustomEvent)=> {
+            const detail: ModuleChoicePassBtnContinueEvent = ev.detail;
+
+            await this.ServerRequest_GetMiddleModule();
+
+            detail.PassModal.hide();
+        });
     }
 
     //#endregion

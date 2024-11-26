@@ -19,3 +19,8 @@ type ModuleChoiceSelectedEvent = {
     ChoiceType: string;
     ChoiceResult: string;
 }
+
+type ModuleChoicePassBtnContinueEventType = "gp_event_ModuleChoicePass_BtnContinue"
+type ModuleChoicePassBtnContinueEvent = {
+    PassModal: bootstrap.Modal;
+}
