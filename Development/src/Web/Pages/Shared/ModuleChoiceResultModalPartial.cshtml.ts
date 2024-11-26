@@ -55,7 +55,7 @@
 
     private LoadResultModal_Pass(choiceResultPassText: string): void {
         const divChoiceResult = this.divResultPassModal.querySelector('#divChoiceResult') as HTMLDivElement;
-        divChoiceResult.innerHTML = choiceResultPassText;
+        divChoiceResult.innerHTML = `<div class="text-center mb-4"><i class="fa-solid fa-circle-check fa-7x text-success"></i></div> <p>${choiceResultPassText}</p>`;
 
         this.resultPassModal.show();
     }
@@ -79,7 +79,7 @@
 
     private LoadResultModal_Fail(choiceResultFailText: string): void {
         const divChoiceResult = this.divResultFailModal.querySelector('#divChoiceResult') as HTMLDivElement;
-        divChoiceResult.innerHTML = choiceResultFailText;
+        divChoiceResult.innerHTML = `<div class="text-center mb-4"><i class="fa-solid fa-circle-xmark fa-7x text-danger"></i></div> <p>${choiceResultFailText}</p>`;
 
         this.resultFailModal.show();
     }
