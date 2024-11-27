@@ -54,6 +54,9 @@ class StoryModule {
 
     //#region GetMiddleModule
 
+    private maxNumMiddleModules: number = Math.floor((Math.random() * 10) + 1); //random number between 1 and 10
+    private numMiddleModules: number = 0;
+
     private async ServerRequest_GetMiddleModule(): Promise<void> {
         let dataToServer: UsedModulesDTO = Utilities.LocalStorage_LoadItem(Utilities.LocalStorageConstant_PreviouslyUsedModules) as string[];
         dataToServer = dataToServer !== undefined ? dataToServer : [];
@@ -76,11 +79,14 @@ class StoryModule {
     }
 
     private async ServerRequestDone_GetMiddleModule(middleModuleData: ModuleDTO): Promise<void> {
+        //show end module since no more modules to display 
         if (middleModuleData === null) {
-            //either no more modules to display or max modules reached
             await this.ServerRequest_GetEndModule();
             return;
         }
+
+        //increment the number of middle modules
+        this.numMiddleModules += 1;
 
         //store the module id to ignore it in the next request
         Utilities.StoreCurrentModuleInLocalStorage(middleModuleData.ModuleId.toString());
@@ -132,9 +138,11 @@ class StoryModule {
     private ConsumeEvent_ModuleChoicePass_BtnContinue(): void {
         const eventType: ModuleChoicePassBtnContinueEventType = "gp_event_ModuleChoicePass_BtnContinue";
         document.addEventListener(eventType, async (ev: CustomEvent) => {
-            const detail: ModuleChoicePassBtnContinueEvent = ev.detail;
-            await this.ServerRequest_GetMiddleModule();
+            //if the number of middle modules is less than the max number of middle modules then get another middle module
+            if (this.numMiddleModules !== this.maxNumMiddleModules) await this.ServerRequest_GetMiddleModule();
+            else await this.ServerRequest_GetEndModule();
 
+            const detail: ModuleChoicePassBtnContinueEvent = ev.detail;
             detail.PassModal.hide();
         });
     }
