@@ -54,6 +54,7 @@ class Utilities {
 
     //#endregion
 
+
     //#region Storage
 
     public static LocalStorage_LoadItem = (stateName: string) => {
