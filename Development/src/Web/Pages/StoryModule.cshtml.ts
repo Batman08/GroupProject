@@ -4,6 +4,7 @@ class StoryModule {
     //#region Urls
 
     private readonly _urlGetMiddleModule: string = Utilities.Controller() + "MiddleModule";
+    private readonly _urlGetEndModule: string = Utilities.Controller() + "EndModule";
 
     //#endregion
 
@@ -67,14 +68,20 @@ class StoryModule {
 
         if (response.ok) {
             const dataFromServer = await response.json() as MiddleModuleResponseDTO;
-            this.ServerRequestDone_GetMiddleModule(dataFromServer.MiddleModule);
+            await this.ServerRequestDone_GetMiddleModule(dataFromServer.MiddleModule);
         } else {
             const error = await response.text();
             console.error(`Error ${response.status} ${response.statusText}:`, error);
         }
     }
 
-    private ServerRequestDone_GetMiddleModule(middleModuleData: MiddleModuleDTO) {
+    private async ServerRequestDone_GetMiddleModule(middleModuleData: ModuleDTO): Promise<void> {
+        if (middleModuleData === null) {
+            //either no more modules to display or max modules reached
+            await this.ServerRequest_GetEndModule();
+            return;
+        }
+
         //store the module id to ignore it in the next request
         Utilities.StoreCurrentModuleInLocalStorage(middleModuleData.ModuleId.toString());
 
@@ -82,7 +89,7 @@ class StoryModule {
         this.RenderModule(middleModuleData);
     }
 
-    private RenderModule(middleModuleData: MiddleModuleDTO): void {
+    private RenderModule(middleModuleData: ModuleDTO): void {
         const divModule = this._container.querySelector('#divModule') as HTMLDivElement;
 
         const pModuleContent = divModule.querySelector('#pModuleContent') as HTMLParagraphElement;
@@ -126,11 +133,50 @@ class StoryModule {
         const eventType: ModuleChoicePassBtnContinueEventType = "gp_event_ModuleChoicePass_BtnContinue";
         document.addEventListener(eventType, async (ev: CustomEvent) => {
             const detail: ModuleChoicePassBtnContinueEvent = ev.detail;
-
             await this.ServerRequest_GetMiddleModule();
 
             detail.PassModal.hide();
         });
+    }
+
+    //#endregion
+
+    //#region GetEndModule
+
+    public async ServerRequest_GetEndModule(): Promise<void> {
+        //get generated keywords from local storage and create an array of SearchParam objects
+        const dataToServer: SearchParam[] = KeywordsGenerator.Helpers_GetGeneratedKeywordsFromStorage().map((keyword: GeneratedKeywordDTO) => {
+            return { CategoryId: keyword.CategoryId, Keyword: keyword.Keyword };
+        });
+
+        //create query string from dataToServer array
+        const queryStrParams = new URLSearchParams();
+        dataToServer.forEach((param: SearchParam, index: number) => {
+            queryStrParams.append(`searchParams[${index}].CategoryId`, param.CategoryId.toString());
+            queryStrParams.append(`searchParams[${index}].Keyword`, param.Keyword);
+        });
+
+        const response: Response = await fetch(`${this._urlGetEndModule}&${queryStrParams}`, { method: 'GET' });
+
+        if (response.ok) {
+            const dataFromServer = await response.json() as EndModuleResponseDTO;
+            this.ServerRequestDone_GetEndModule(dataFromServer.EndModule);
+        } else {
+            const error = await response.text();
+            console.error(`Error ${response.status} ${response.statusText}:`, error);
+        }
+    }
+
+    private ServerRequestDone_GetEndModule(endModuleData: ModuleDTO) {
+        //send event to display end module modal
+        this.DispatchEvent_EndModule(endModuleData.Contents);
+    }
+
+    private DispatchEvent_EndModule(endModuleText: string): void {
+        const eventType: EndModuleEventType = "gp_event_EndModule";
+        const eventData: EndModuleEvent = { EndModuleText: endModuleText };
+        const gpEvent = new CustomEvent(eventType, { bubbles: true, detail: eventData });
+        document.body.dispatchEvent(gpEvent);
     }
 
     //#endregion

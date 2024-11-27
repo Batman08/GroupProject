@@ -1,4 +1,6 @@
-﻿namespace Domain.Features.StoryModule
+﻿using Domain.Features.Search;
+
+namespace Domain.Features.StoryModule
 {
     public class ModuleDTO
     {
@@ -8,5 +10,6 @@
         public string PassChoiceResult { get; set; } = "";
         public string FailChoiceText { get; set; } = "";
         public string FailChoiceResult { get; set; } = "";
+        public List<SearchParam> Keywords { get; set; } = new List<SearchParam>();
     }
 }

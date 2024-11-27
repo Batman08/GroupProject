@@ -1,4 +1,5 @@
 using Domain.Common;
+using Domain.Features.Search;
 using Domain.Features.StoryModule;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -32,6 +33,12 @@ namespace Web.Pages
         {
             var result = await _storyModuleQueries.GetMiddleModule(usedModulesParam);
             return new JsonResult(new { MiddleModule = result }, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+
+        public async Task<JsonResult> OnGetEndModule([FromQuery] List<SearchParam> searchParams)
+        {
+            var result = await _storyModuleQueries.GetEndModule(searchParams);
+            return new JsonResult(new { EndModule = result }, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
 

@@ -4,10 +4,13 @@
     private readonly _container = document.getElementById('moduleChoiceResultModalContainer') as HTMLDivElement;
     private readonly divResultPassModal = this._container.querySelector('#divResultPassModal') as HTMLDivElement;
     private readonly divResultFailModal = this._container.querySelector('#divResultFailModal') as HTMLDivElement;
+    private readonly divEndModuleModal = this._container.querySelector('#divEndModuleModal') as HTMLDivElement;
     private readonly btnContinue = this.divResultPassModal.querySelector('#btnContinue') as HTMLButtonElement;
-    private readonly btnRestart = this.divResultFailModal.querySelector('#btnRestart') as HTMLButtonElement;
+    private readonly btnRestart_FailModal = this.divResultFailModal.querySelector('#btnRestart') as HTMLButtonElement;
+    private readonly btnRestart_EndModuleModal = this.divEndModuleModal.querySelector('#btnRestart') as HTMLButtonElement;
     private readonly resultPassModal: bootstrap.Modal = new bootstrap.Modal(this.divResultPassModal);
     private readonly resultFailModal: bootstrap.Modal = new bootstrap.Modal(this.divResultFailModal);
+    private readonly endModuleModal: bootstrap.Modal = new bootstrap.Modal(this.divEndModuleModal);
 
     //#endregion
 
@@ -29,9 +32,11 @@
 
     private Events(): void {
         this.btnContinue.onclick = (ev: MouseEvent) => this.ResultModalPass_BtnContinue(ev);
-        this.btnRestart.onclick = (ev: MouseEvent) => this.ResultModalFail_BtnResult(ev);
+        this.btnRestart_FailModal.onclick = (ev: MouseEvent) => this.ResultModalFail_BtnResult(ev);
+        this.btnRestart_EndModuleModal.onclick = (ev: MouseEvent) => this.EndModuleModal_BtnResult(ev);
 
         this.ConsumeEvent_ModuleChoiceResult_Selected();
+        this.ConsumeEvent_EndModule();
     }
 
     private ConsumeEvent_ModuleChoiceResult_Selected(): void {
@@ -45,6 +50,14 @@
             else {
                 this.LoadResultModal_Fail(detail.ChoiceResult);
             }
+        });
+    }
+
+    private ConsumeEvent_EndModule(): void {
+        const eventType: EndModuleEventType = "gp_event_EndModule";
+        document.addEventListener(eventType, (ev: CustomEvent) => {
+            const detail: EndModuleEvent = ev.detail;
+            this.LoadEndModuleModal(detail.EndModuleText);
         });
     }
 
@@ -86,8 +99,33 @@
 
     private ResultModalFail_BtnResult(ev: MouseEvent): void {
         //disable button
-        Utilities.DisableBtn(this.btnRestart);
-        this.btnRestart.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Restarting...';
+        Utilities.DisableBtn(this.btnRestart_FailModal);
+        this.btnRestart_FailModal.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Restarting...';
+
+        //clear stored data
+        Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_GeneratedKeywords);
+        Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_PreviouslyUsedModules);
+
+        //redirect to search page
+        window.location.href = "/Search";
+    }
+
+    //#endregion
+
+
+    //#region EndModuleModals
+
+    private LoadEndModuleModal(endModuleText: string): void {
+        const divEndModule = this.divEndModuleModal.querySelector('#divEndModule') as HTMLDivElement;
+        divEndModule.innerHTML = `<div class="text-center mb-4"><i class="fa-regular fa-thumbs-up fa-7x text-success"></i></div> <p>${endModuleText}</p>`;
+
+        this.endModuleModal.show();
+    }
+
+    private EndModuleModal_BtnResult(ev: MouseEvent): void {
+        //disable button
+        Utilities.DisableBtn(this.btnRestart_EndModuleModal);
+        this.btnRestart_EndModuleModal.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Please wait...';
 
         //clear stored data
         Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_GeneratedKeywords);
