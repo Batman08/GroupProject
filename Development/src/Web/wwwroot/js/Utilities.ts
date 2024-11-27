@@ -38,12 +38,6 @@ class Utilities {
         return inputVal === null || inputVal === undefined || inputVal === '';
     }
 
-    public static StoreCurrentModuleInLocalStorage(moduleName: string): void {
-        const previouslyUsedModules: string[] = this.LocalStorage_LoadItem(this.LocalStorageConstant_PreviouslyUsedModules) || [];
-        previouslyUsedModules.push(moduleName);
-        this.LocalStorage_SetItem(previouslyUsedModules, this.LocalStorageConstant_PreviouslyUsedModules);
-    }
-
     public static GetPlayerDetailsFromStorage(): PlayerDetailsDTO {
         return this.LocalStorage_LoadItem(this.LocalStorageConstant_PlayerDetails) as PlayerDetailsDTO;
     }

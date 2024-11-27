@@ -102,7 +102,9 @@ class StoryModule {
         this.numMiddleModules += 1;
 
         //store the module id to ignore it in the next request
-        Utilities.StoreCurrentModuleInLocalStorage(middleModuleData.ModuleId.toString());
+        const previouslyUsedModules: string[] = Utilities.LocalStorage_LoadItem(Utilities.LocalStorageConstant_PreviouslyUsedModules) || [];
+        previouslyUsedModules.push(middleModuleData.ModuleId.toString());
+        Utilities.LocalStorage_SetItem(previouslyUsedModules, Utilities.LocalStorageConstant_PreviouslyUsedModules);
 
         //display new module
         this.RenderModule(middleModuleData);
