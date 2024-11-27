@@ -29,9 +29,9 @@ namespace Web.Pages
             return Page();
         }
 
-        public async Task<JsonResult> OnGetMiddleModule([FromQuery] List<string> usedModulesParam)
+        public async Task<JsonResult> OnGetMiddleModule([FromQuery] List<SearchParam> searchParams, [FromQuery] List<string> usedModulesParams)
         {
-            var result = await _storyModuleQueries.GetMiddleModule(usedModulesParam);
+            var result = await _storyModuleQueries.GetMiddleModule(searchParams, usedModulesParams);
             return new JsonResult(new { MiddleModule = result }, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 

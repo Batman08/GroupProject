@@ -8,7 +8,7 @@ namespace Domain.Features.StoryModule
     public interface IStoryModuleQueries
     {
         ModuleDTO? GetInitalModule(int moduleId);
-        Task<ModuleDTO> GetMiddleModule(List<string> usedModulesParam);
+        Task<ModuleDTO> GetMiddleModule(List<SearchParam> keywords, List<string> usedModulesParams);
         Task<ModuleDTO> GetEndModule(List<SearchParam> keywords);
     }
 
@@ -45,10 +45,11 @@ namespace Domain.Features.StoryModule
 
 
         #region Middle Module
-        public async Task<ModuleDTO> GetMiddleModule(List<string> usedModulesParam)
+
+        public async Task<ModuleDTO> GetMiddleModule(List<SearchParam> keywords, List<string> usedModulesParams)
         {
             // Convert used modules to list of int
-            var parsedUsedModuleIds = usedModulesParam.Select(int.Parse).ToList();
+            var parsedUsedModuleIds = usedModulesParams.Select(int.Parse).ToList();
 
             // Get all modules that have not been used yet, the module status is published, and has a category of "Module Position" with the keyword "Middle"
             var availableModules = await (from m in QueriesContext.Modules
@@ -69,9 +70,19 @@ namespace Domain.Features.StoryModule
                                               FailChoiceResult = m.FailChoiceResult
                                           }).ToListAsync();
 
+            //get all keywords for each module
+            foreach (var module in availableModules) module.Keywords = await GetModuleKeywords(module.ModuleId);
+
+            //get the category id for category "Module Position"
+            var modulePositionCategoryId = (await QueriesContext.Categories.FirstOrDefaultAsync(c => c.Name == "Module Position"))?.CategoryId;
+
+            //filter modules based on search params
+            var filteredModules = availableModules.Where(m => keywords.Any(sp => m.Keywords.Any(k => k.CategoryId == sp.CategoryId && k.Keyword.Contains(sp.Keyword)))
+                                                     && m.Keywords.Any(k => k.CategoryId == modulePositionCategoryId && k.Keyword == "Middle")).ToList();
+
             // Select a random module from the available modules
             var random = new Random();
-            var randomModule = availableModules.OrderBy(x => random.Next(0, availableModules.Count)).FirstOrDefault();
+            var randomModule = filteredModules.OrderBy(x => random.Next(0, filteredModules.Count)).FirstOrDefault();
 
             return randomModule!;
         }
@@ -107,10 +118,9 @@ namespace Domain.Features.StoryModule
             //get the category id for category "Module Position"
             var modulePositionCategoryId = (await QueriesContext.Categories.FirstOrDefaultAsync(c => c.Name == "Module Position"))?.CategoryId;
 
-            //filter modules based on search params and return 2 modules
+            //filter modules based on search params
             var filteredModules = availableModules.Where(m => keywords.Any(sp => m.Keywords.Any(k => k.CategoryId == sp.CategoryId && k.Keyword.Contains(sp.Keyword)))
-                                                     && m.Keywords.Any(k => k.CategoryId == modulePositionCategoryId && k.Keyword == "End"))
-                      .ToList();
+                                                     && m.Keywords.Any(k => k.CategoryId == modulePositionCategoryId && k.Keyword == "End")).ToList();
 
             // Select a random module from the available modules
             var random = new Random();

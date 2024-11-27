@@ -28,7 +28,7 @@ class StoryModule {
         //Utilities.StoreCurrentModuleInLocalStorage(moduleId);
 
         //this is for when a page refresh is done the options page shows
-        //Utilities.RemoveUrlQueryString();
+        Utilities.RemoveUrlQueryString();
 
         this.BindClick_InitialModuleContinue();
         this.ConsumeEvent_ModuleChoicePass_BtnContinue();
@@ -58,16 +58,29 @@ class StoryModule {
     private numMiddleModules: number = 0;
 
     private async ServerRequest_GetMiddleModule(): Promise<void> {
-        let dataToServer: UsedModulesDTO = Utilities.LocalStorage_LoadItem(Utilities.LocalStorageConstant_PreviouslyUsedModules) as string[];
-        dataToServer = dataToServer !== undefined ? dataToServer : [];
+        /* Keywords Search Param */
 
-        //create query string from dataToServer array
-        const queryStrParams = new URLSearchParams();
-        dataToServer.forEach((param: string) => {
-            queryStrParams.append(`usedModulesParam`, param);
+        const searchParamData: SearchParam[] = KeywordsGenerator.Helpers_GetGeneratedKeywordsFromStorage().map((keyword: GeneratedKeywordDTO) => {
+            return { CategoryId: keyword.CategoryId, Keyword: keyword.Keyword };
+        });
+        const queryStrSearchParams = new URLSearchParams();
+        searchParamData.forEach((param: SearchParam, index: number) => {
+            queryStrSearchParams.append(`searchParams[${index}].CategoryId`, param.CategoryId.toString());
+            queryStrSearchParams.append(`searchParams[${index}].Keyword`, param.Keyword);
         });
 
-        const response: Response = await fetch(`${this._urlGetMiddleModule}&${queryStrParams}`, { method: 'GET' });
+
+        /* Used Modules Param */
+
+        let usedModulesData: UsedModulesDTO = Utilities.LocalStorage_LoadItem(Utilities.LocalStorageConstant_PreviouslyUsedModules) as string[];
+        usedModulesData = usedModulesData !== undefined ? usedModulesData : [];
+        const queryStrUsedModulesParams = new URLSearchParams();
+        usedModulesData.forEach((param: string) => {
+            queryStrUsedModulesParams.append(`usedModulesParams`, param);
+        });
+
+
+        const response: Response = await fetch(`${this._urlGetMiddleModule}&${queryStrSearchParams}&${queryStrUsedModulesParams}`, { method: 'GET' });
 
         if (response.ok) {
             const dataFromServer = await response.json() as MiddleModuleResponseDTO;
@@ -148,6 +161,7 @@ class StoryModule {
     }
 
     //#endregion
+
 
     //#region GetEndModule
 
