@@ -53,6 +53,11 @@ class Utilities {
         return playerDetails !== null && playerDetails !== undefined;
     }
 
+    public static ResetStoredGameDetails(): void {
+        Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_GeneratedKeywords);
+        Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_PreviouslyUsedModules);
+    }
+
     //#endregion
 
     //#region Storage

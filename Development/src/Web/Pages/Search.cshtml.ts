@@ -23,9 +23,9 @@ class Search {
     }
 
     private async Init(): Promise<void> {
-        this.ConsumeEvent_PlayerDetails_SaveSuccess();
+        Utilities.ResetStoredGameDetails();
 
-        Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_PreviouslyUsedModules); //todo: remove at some point
+        this.ConsumeEvent_PlayerDetails_SaveSuccess();
 
         if (!KeywordsGenerator.Helpers_HasGeneratedKeywords()) {
             await KeywordsGenerator.Init();

@@ -103,8 +103,7 @@
         this.btnRestart_FailModal.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Restarting...';
 
         //clear stored data
-        Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_GeneratedKeywords);
-        Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_PreviouslyUsedModules);
+        Utilities.ResetStoredGameDetails();
 
         //redirect to search page
         window.location.href = "/Search";
@@ -128,8 +127,7 @@
         this.btnRestart_EndModuleModal.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Please wait...';
 
         //clear stored data
-        Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_GeneratedKeywords);
-        Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_PreviouslyUsedModules);
+        Utilities.ResetStoredGameDetails();
 
         //redirect to search page
         window.location.href = "/Search";
