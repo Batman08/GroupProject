@@ -2,4 +2,9 @@
     AuthorsModules: AuthorsModuleDTO[];
 }
 
-type AuthorsModuleDTO = {}
+
+type AuthorsModuleDTO = {
+    ModuleId: number;
+    ModulePosition: string;
+    ModuleContent: string;
+}

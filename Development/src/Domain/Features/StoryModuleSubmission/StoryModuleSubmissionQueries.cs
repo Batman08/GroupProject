@@ -49,19 +49,18 @@ namespace Domain.Features.StoryModuleSubmission
 
         public async Task<List<AuthorsModuleDTO>> GetAllModulesForSpecificAuthor(string authorParam)
         {
-            var modulesData = await (from m in QueriesContext.Modules
+            var modulesData = await (from m2k in QueriesContext.Modules2Keywords
+                                     join m in QueriesContext.Modules on m2k.ModuleId equals m.ModuleId
+                                     join k in QueriesContext.Keywords on m2k.KeywordId equals k.KeywordId
+                                     join c in QueriesContext.Categories on k.CategoryId equals c.CategoryId
                                      join mst in QueriesContext.ModuleStatusTypes on m.ModuleStatusTypeId equals mst.ModuleStatusTypeId
-                                     where m.Author == authorParam
+                                     where m.Author == authorParam && c.Name == "Module Position"
+                                     orderby m2k.Module2KeywordId descending
                                      select new AuthorsModuleDTO
                                      {
                                          ModuleId = m.ModuleId,
-                                         Contents = m.Contents,
-                                         PassChoiceText = m.PassChoiceText,
-                                         PassChoiceResult = m.PassChoiceResult,
-                                         FailChoiceText = m.FailChoiceText,
-                                         FailChoiceResult = m.FailChoiceResult,
-                                         Author = m.Author,
-                                         ModuleStatusType = mst.Name
+                                         ModulePosition = k.Name,
+                                         ModuleContent = m.Contents,
                                      }).ToListAsync();
 
 

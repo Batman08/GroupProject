@@ -109,9 +109,54 @@
 
                 <div class="tab-pane fade" id="pills-edit" role="tabpanel" aria-labelledby="pills-edit-tab" tabindex="0">
                     <h2 class="mt-5 mb-4 fw-bold">Edit Story Module</h2>
+
+                    <div id="divAuthorsModulesPanel">
+                        @* Loading Spinner *@
+                        <div class="text-center fs-3 mt-5">
+                            <i class="fa-solid fa-circle-notch fa-spin"></i> Loading your story modules...
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+
+<partial name="~/Pages/Shared/EditModuleModalPartial.cshtml" model="@Model.EditModuleModalInitialDataModel" />
+
+
+@section ElementTemplates {
+
+    @* EditModulePanel *@
+    <div id="gp-divEditModulePanel" class="p-3 mb-3 bg-white lyt-box-shadow rounded">
+        <div class="px-0 px-md-5 text-muted">
+            <div class="fs-5 pt-2 fw-bold">Story Module Flow</div>
+            <div id="divModulePosition" class="fs-6 pt-2"></div>
+
+            <hr />
+
+            <div class="fs-5 pt-2 fw-bold">Story Module Content</div>
+            <div id="divModuleContent" class="fs-6 pt-2"></div>
+
+            <div class="text-end"><button id="btnEditModule" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i> Edit</button></div>
+        </div>
+    </div>
+
+}
+
+
+@section Scripts {
+
+    <script src="~/Pages/Shared/EditModuleModalPartial.cshtml.js" asp-append-version="true"></script>
+    <script src="~/Pages/StoryModuleSubmission.cshtml.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // EditModuleModal.Init();
+            StoryModuleSubmission.Init();
+        });
+    </script>
+
+}
