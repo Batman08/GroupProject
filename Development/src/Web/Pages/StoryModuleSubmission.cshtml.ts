@@ -76,16 +76,21 @@ class StoryModuleSubmission {
         divModuleContent.removeAttribute("id");
         divModuleContent.textContent = data.ModuleContent;
 
-        //const btnModule = editModulePanelEl.querySelector("#btnModule") as HTMLButtonElement;
-        //btnModule.removeAttribute("id");
-        //btnModule.onclick = (ev: MouseEvent) => {
-        //    this.DisableAllModuleOptionButtons(ev.target as HTMLElement);
-        //    window.location.href = `StoryModule?selected=${data.ModuleId}`;
-        //};
+        const btnEditModule = editModulePanelEl.querySelector("#btnEditModule") as HTMLButtonElement;
+        btnEditModule.removeAttribute("id");
+        btnEditModule.onclick = (ev: MouseEvent) => {
+            this.DispatchEvent_EditModule(ev, data.ModuleId);
+        };
 
         return editModulePanelEl;
     }
 
+    private DispatchEvent_EditModule(ev: MouseEvent, moduleId: number): void {
+        const eventType: EditModuleEventType = "gp_event_EditModule";
+        const eventData: EditModuleEvent = { ModuleId: moduleId };
+        const gpEvent = new CustomEvent(eventType, { bubbles: true, detail: eventData });
+        document.body.dispatchEvent(gpEvent);
+    }
 
     //#endregion
 }

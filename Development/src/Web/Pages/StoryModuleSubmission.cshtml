@@ -46,15 +46,15 @@
                             </div>
 
                             <div class="mb-4">
-                                <label for="inputPassChoiceText" class="form-label fw-bold">Pass Choice Outcome Text</label>
-                                <textarea class="form-control" id="inputPassChoiceText" name="PassChoiceResult" rows="3"></textarea>
+                                <label for="inputPassChoiceResult" class="form-label fw-bold">Pass Choice Outcome Text</label>
+                                <textarea class="form-control" id="inputPassChoiceResult" name="PassChoiceResult" rows="3"></textarea>
                             </div>
 
 
                             @* Fail Choice *@
                             <div class="mb-4">
-                                <label for="inputFailChoiceText" class="form-label fw-bold">Fail Choice Button Text</label>
-                                <input type="text" class="form-control" id="inputFailChoiceText" name="FailChoiceText" placeholder="">
+                                <label for="inputFailChoiceResult" class="form-label fw-bold">Fail Choice Button Text</label>
+                                <input type="text" class="form-control" id="inputFailChoiceResult" name="FailChoiceText" placeholder="">
                             </div>
 
                             <div class="mb-4">
@@ -92,8 +92,8 @@
                                 @foreach (var item in Model.MainKeywords)
                                 {
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="@item.KeywordId" id="@item.KeywordId">
-                                        <label class="form-check-label" for="@item.KeywordId">@item.Name</label>
+                                        <input class="form-check-input" type="checkbox" value="@item.KeywordId" id="@item.KeywordId-CreateForm">
+                                        <label class="form-check-label" for="@item.KeywordId-CreateForm">@item.Name</label>
                                     </div>
                                 }
                             </div>
@@ -154,7 +154,7 @@
     <script src="~/Pages/StoryModuleSubmission.cshtml.js" asp-append-version="true"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            // EditModuleModal.Init();
+            EditModuleModal.Init();
             StoryModuleSubmission.Init();
         });
     </script>

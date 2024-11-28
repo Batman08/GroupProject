@@ -10,13 +10,14 @@
     public class AuthorsFullModuleDTO
     {
         public int ModuleId { get; set; }
-        public string Contents { get; set; } = "";
+        public string Content { get; set; } = "";
         public string PassChoiceText { get; set; } = "";
         public string PassChoiceResult { get; set; } = "";
         public string FailChoiceText { get; set; } = "";
         public string FailChoiceResult { get; set; } = "";
-        public string Author { get; set; } = "";
         public string ModuleStatusType { get; set; } = "";
+        public KeywordItemDTO ModulePosition { get; set; } = new KeywordItemDTO();
+        public List<KeywordItemDTO> KeywordItems { get; set; } = new List<KeywordItemDTO>();
     }
 
     public class KeywordItemDTO

@@ -32,5 +32,11 @@ namespace Web.Pages
             var result = await _storyModuleSubmissionQueries.GetAllModulesForSpecificAuthor(author);
             return new JsonResult(new { AuthorsModules = result }, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
+
+        public async Task<JsonResult> OnGetEditModalModuleData([FromQuery] int moduleId)
+        {
+            var result = await _storyModuleSubmissionQueries.GetEditModuleData(moduleId);
+            return new JsonResult(result, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
     }
 }
