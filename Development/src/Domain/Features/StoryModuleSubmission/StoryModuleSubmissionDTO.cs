@@ -31,4 +31,17 @@
         public List<KeywordItemDTO> ModulePositionKeywords { get; set; } = new List<KeywordItemDTO>();
         public List<KeywordItemDTO> MainKeywords { get; set; } = new List<KeywordItemDTO>();
     }
+
+    public class CreateModuleDTO
+    {
+        public string Content { get; set; } = "";
+        public string? PassChoiceText { get; set; }
+        public string? PassChoiceResult { get; set; }
+        public string? FailChoiceText { get; set; }
+        public string? FailChoiceResult { get; set; }
+        public string Author { get; set; } = "";
+        public int ModuleStatusTypeId { get; set; }
+        public List<int> Keywords { get; set; } = new List<int>();
+        public string ModulePosition { get; set; } = "";
+    }
 }

@@ -20,15 +20,7 @@ namespace Domain.Database
                                  .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking).Options;
 
             QueriesContext = new GroupProjectDatabaseContext(_contextOptions);
-
             QueriesContext.ChangeTracker.AutoDetectChangesEnabled = false;
-
-            QueriesContext.SavingChanges += QueriesContext_SavingChanges;
-        }
-
-        private void QueriesContext_SavingChanges(object? sender, SavingChangesEventArgs e)
-        {
-            throw new NotSupportedException("Saving changes using the QueriesContext is not allowed. Use the CommandsContext instead.");
         }
 
         private static DbContextOptions<GroupProjectDatabaseContext>? _contextOptions = null;

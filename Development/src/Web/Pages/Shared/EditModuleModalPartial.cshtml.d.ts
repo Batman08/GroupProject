@@ -8,8 +8,3 @@
     ModulePosition: KeywordItemDTO;
     KeywordItems: KeywordItemDTO[];
 }
-
-type KeywordItemDTO = {
-    KeywordId: number;
-    Name: string;
-}
