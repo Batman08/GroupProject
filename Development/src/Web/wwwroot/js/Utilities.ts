@@ -52,6 +52,22 @@ class Utilities {
         Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_PreviouslyUsedModules);
     }
 
+    public static CreateAuthor(): void {
+        //if author is already created, do nothing
+        if (Utilities.LocalStorage_LoadItem(Utilities.LocalStorageConstant_Author) !== undefined) return;
+
+
+        //genereate guid for author
+        const authorIdentifier = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            const r = Math.random() * 16 | 0; // Random integer between 0 and 15
+            const v = c === 'x' ? r : (r & 0x3 | 0x8); // Use 0x8 for 'y'
+            return v.toString(16); // Convert to hexadecimal
+        });
+
+        const author: AuthorDTO = { Author: authorIdentifier };
+        Utilities.LocalStorage_SetItem(author, Utilities.LocalStorageConstant_Author);
+    }
+
     //#endregion
 
 
@@ -92,6 +108,7 @@ class Utilities {
     public static readonly LocalStorageConstant_GeneratedKeywords: string = "gp_GeneratedKeywords";
     public static readonly LocalStorageConstant_PreviouslyUsedModules: string = "gp_PreviouslyUsedModules";
     public static readonly LocalStorageConstant_PlayerDetails: string = "gp_PlayerDetails";
+    public static readonly LocalStorageConstant_Author: string = "gp_Author";
 
     //#endregion
 

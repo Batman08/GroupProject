@@ -1,0 +1,97 @@
+﻿@using Domain.Features.StoryModuleSubmission
+@model EditModuleModalInitialDataModel
+
+<div id="divEditModuleModalContainer">
+
+    @* Edit Module Modal *@
+
+    <div class="modal fade" id="divEditModuleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModuleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form id="formEditModule" method="post">
+                <div class="modal-content">
+                    <div class="modal-header shadow">
+                        <h1 class="modal-title fs-4 fw-bold" id="editModuleModalLabel"><i class="fa-solid fa-pen-to-square"></i> Edit Story Module</h1>
+                    </div>
+                    <div class="modal-body">
+                        @* Module Content *@
+
+                        <div class="mb-4">
+                            <label for="inputModuleContent" class="form-label fw-bold">Main Body Text</label>
+                            <textarea class="form-control" id="inputModuleContent" name="ModuleContent" rows="5"></textarea>
+                        </div>
+
+
+                        @* Module Choices *@
+
+                        <div id="divModuleChoices">
+
+                            @* Pass Choice*@
+                            <div class="mb-4">
+                                <label for="inputPassChoiceText" class="form-label fw-bold">Pass Choice Button Text</label>
+                                <input type="text" class="form-control" id="inputPassChoiceText" name="PassChoiceText" placeholder="">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="inputPassChoiceText" class="form-label fw-bold">Pass Choice Outcome Text</label>
+                                <textarea class="form-control" id="inputPassChoiceText" name="PassChoiceResult" rows="3"></textarea>
+                            </div>
+
+
+                            @* Fail Choice *@
+                            <div class="mb-4">
+                                <label for="inputFailChoiceText" class="form-label fw-bold">Fail Choice Button Text</label>
+                                <input type="text" class="form-control" id="inputFailChoiceText" name="FailChoiceText" placeholder="">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="inputFailChoiceText" class="form-label fw-bold">Fail Choice Outcome Text</label>
+                                <textarea class="form-control" id="inputFailChoiceText" name="FailChoiceResult" rows="3"></textarea>
+                            </div>
+                        </div>
+
+
+                        <hr />
+
+
+                        @* Module Position *@
+
+                        <div class="mb-4">
+                            <label for="inputModulePosition" class="form-label fw-bold">Story Module Flow</label>
+                            <select id="inputModulePosition" name="ModulePosition" class="form-select">
+                                @foreach (var item in Model.ModulePositionKeywords)
+                                {
+                                    <option value="@item.KeywordId">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+
+
+                        <hr />
+
+
+                        @* Module Keywords *@
+
+                        <div class="mb-4">
+                            <div for="inputModulePosition" class="form-label fw-bold">Story Module Keyword(s)</div>
+
+                            <div>
+                                @foreach (var item in Model.MainKeywords)
+                                {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="@item.KeywordId" id="@item.KeywordId">
+                                        <label class="form-check-label" for="@item.KeywordId">@item.Name</label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary lyt-btn-shadow fw-bold" data-bs-dismiss="modal"><i class="fa-solid fa-ban"></i> Cancel</button>
+                        <button type="submit" class="btn btn-success lyt-btn-shadow fw-bold"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

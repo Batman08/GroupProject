@@ -1,5 +1,7 @@
 using Domain.Features.StoryModuleSubmission;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
 namespace Web.Pages
 {
@@ -7,6 +9,7 @@ namespace Web.Pages
     {
         public List<KeywordItemDTO> ModulePositionKeywords { get; set; } = new List<KeywordItemDTO>();
         public List<KeywordItemDTO> MainKeywords { get; set; } = new List<KeywordItemDTO>();
+        public EditModuleModalInitialDataModel EditModuleModalInitialDataModel { get; set; } = new EditModuleModalInitialDataModel();
 
         private readonly IStoryModuleSubmissionQueries _storyModuleSubmissionQueries;
 
@@ -15,10 +18,19 @@ namespace Web.Pages
             _storyModuleSubmissionQueries = storyModuleSubmissionQueries;
         }
 
-        public async void OnGet()
+        public async Task OnGet()
         {
             ModulePositionKeywords = await _storyModuleSubmissionQueries.GetModulePositionKeywords();
             MainKeywords = await _storyModuleSubmissionQueries.GetMainKeywords();
+
+            EditModuleModalInitialDataModel.ModulePositionKeywords = ModulePositionKeywords;
+            EditModuleModalInitialDataModel.MainKeywords = MainKeywords;
+        }
+
+        public async Task<JsonResult> OnGetAuthorsModules([FromQuery] string author)
+        {
+            var result = await _storyModuleSubmissionQueries.GetAllModulesForSpecificAuthor(author);
+            return new JsonResult(new { AuthorsModules = result }, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
     }
 }

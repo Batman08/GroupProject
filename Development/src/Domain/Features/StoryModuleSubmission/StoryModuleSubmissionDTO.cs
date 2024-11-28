@@ -1,6 +1,6 @@
 ﻿namespace Domain.Features.StoryModuleSubmission
 {
-    public class FullModuleDTO
+    public class AuthorsModuleDTO
     {
         public int ModuleId { get; set; }
         public string Contents { get; set; } = "";
@@ -16,5 +16,11 @@
     {
         public int KeywordId { get; set; }
         public string Name { get; set; } = "";
+    }
+
+    public class EditModuleModalInitialDataModel
+    {
+        public List<KeywordItemDTO> ModulePositionKeywords { get; set; } = new List<KeywordItemDTO>();
+        public List<KeywordItemDTO> MainKeywords { get; set; } = new List<KeywordItemDTO>();
     }
 }

@@ -9,7 +9,7 @@ namespace Domain.Features.StoryModuleSubmission
     {
         Task<List<KeywordItemDTO>> GetModulePositionKeywords();
         Task<List<KeywordItemDTO>> GetMainKeywords();
-        Task<List<FullModuleDTO>> GetAllModulesForSpecificAuthor(string authorParam);
+        Task<List<AuthorsModuleDTO>> GetAllModulesForSpecificAuthor(string authorParam);
     }
 
     public class StoryModuleSubmissionQueries : QueriesBase, IStoryModuleSubmissionQueries, IGpScoped
@@ -47,12 +47,12 @@ namespace Domain.Features.StoryModuleSubmission
             return keywords;
         }
 
-        public async Task<List<FullModuleDTO>> GetAllModulesForSpecificAuthor(string authorParam)
+        public async Task<List<AuthorsModuleDTO>> GetAllModulesForSpecificAuthor(string authorParam)
         {
             var modulesData = await (from m in QueriesContext.Modules
                                      join mst in QueriesContext.ModuleStatusTypes on m.ModuleStatusTypeId equals mst.ModuleStatusTypeId
                                      where m.Author == authorParam
-                                     select new FullModuleDTO
+                                     select new AuthorsModuleDTO
                                      {
                                          ModuleId = m.ModuleId,
                                          Contents = m.Contents,
