@@ -4,5 +4,193 @@
     ViewData["Title"] = "Story Module Submission";
 }
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Detective Story</title>
+    <style>
+        body {
+            background-color: #466c8c;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
 
-@* put code below here *@
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+
+        .instruction {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+        }
+
+        .add-keyword {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .remove-keyword {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .keyword-list {
+            margin-top: 10px;
+        }
+
+        .keyword-item {
+            display: inline-block;
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #2c5379;
+            color: white;
+            border-radius: 20px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .reset-button {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Detective Story</h1>
+        <h2>Story Module Submission</h2>
+
+        <p class="instruction">
+            If you have not already, please read the story module breakdown
+            before creating your own modules.
+        </p>
+
+        <form id="story-form">
+            <div class="form-group">
+                <label for="module-name">Module name:</label>
+                <input type="text" id="module-name" name="module-name" required placeholder="Enter module name">
+            </div>
+
+            <div class="form-group">
+                <label for="keywords">Module keywords:</label>
+                <input type="text" id="keyword-input" placeholder="Enter a keyword">
+                <button type="button" class="add-keyword" id="add-keyword-button">Add Keyword+</button>
+                <div id="keyword-list" class="keyword-list"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="main-body">Main body text</label>
+                <textarea id="main-body" name="main-body" required placeholder="Write the main content of your module"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="actions">Actions:</label>
+                <textarea id="actions" name="actions" placeholder="Describe possible actions (optional)"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-button">Submit</button>
+                <button type="reset" class="reset-button">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('add-keyword-button').addEventListener('click', function() {
+          const keywordInput = document.getElementById('keyword-input');
+            const keywordList = document.getElementById('keyword-list');
+            const keyword = keywordInput.value.trim();
+
+            if (keyword) {
+                const keywordItem = document.createElement('div');
+                keywordItem.className = 'keyword-item';
+                keywordItem.textContent = keyword;
+
+                const removeButton = document.createElement('button');
+                removeButton.className = 'remove-keyword';
+                removeButton.textContent = 'x';
+                removeButton.addEventListener('click', function() {
+                    keywordList.removeChild(keywordItem);
+                });
+
+                keywordItem.appendChild(removeButton);
+                keywordList.appendChild(keywordItem);
+
+                keywordInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
