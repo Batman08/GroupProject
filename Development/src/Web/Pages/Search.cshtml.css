@@ -6,6 +6,11 @@ button.srch {
     padding: 12px !important;
 }
 
+.srch-card-border {
+    border-color: #416185;
+}
+
+
 .srch-card-footer {
-    background-color: #e5f2ff;
+    background-color: #416185;
 }
