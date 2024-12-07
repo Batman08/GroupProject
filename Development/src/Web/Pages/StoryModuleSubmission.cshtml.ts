@@ -12,6 +12,8 @@ class StoryModuleSubmission {
     //#region Controls
 
     private readonly _container = document.getElementById('divStoryModuleSubmissionContainer') as HTMLDivElement;
+    private readonly divCreateModuleResultPanel = this._container.querySelector('#divCreateModuleResultPanel') as HTMLDivElement;
+    private readonly divEditModuleResultPanel = this._container.querySelector('#divEditModuleResultPanel') as HTMLDivElement;
     private readonly divAuthorsModulesPanel = this._container.querySelector('#divAuthorsModulesPanel') as HTMLDivElement;
     private readonly formCreateModule = this._container.querySelector('#formCreateModule') as HTMLFormElement;
     private readonly formBtnSubmit = this.formCreateModule.querySelector('[type="submit"]') as HTMLButtonElement;
@@ -49,6 +51,11 @@ class StoryModuleSubmission {
         const eventType: ModuleUpdatedSuccessEventType = "gp_event_UpdateModuleSuccess";
         document.addEventListener(eventType, (ev: CustomEvent) => {
             const detail: ModuleUpdatedSuccessEvent = ev.detail;
+
+            //show alert message
+            const alertMsg = Utilities.Alert({ Message: '<i class="fa-solid fa-check fw-bold"></i> Updated successfully', Format: "Default", Type: "success", AdditionalClasses: 'lyt-box-shadow fs-5 fw-bold', OverrideWidthToMax: true, IsDismissable: true });
+            this.divEditModuleResultPanel.appendChild(alertMsg);
+
             //find module in list and update it
             const modulePanel = this.divAuthorsModulesPanel.querySelector(`[moduleId="${detail.ModuleData.ModuleId}"]`);
             if (modulePanel) {
@@ -58,6 +65,9 @@ class StoryModuleSubmission {
                 const moduleContent = modulePanel.querySelector("div[moduleContent]") as HTMLParagraphElement;
                 moduleContent.textContent = detail.ModuleData.ModuleContent;
             }
+
+            //hide modal
+            detail.EditModal.hide();
         });
     }
 
@@ -210,13 +220,14 @@ class StoryModuleSubmission {
             return;
         }
 
-        //remove alert message if it exists
-        const alertMsg = this.divAuthorsModulesPanel.querySelector('.alert');
-        if (alertMsg) alertMsg.remove();
+        //show alert message
+        const alertMsg = Utilities.Alert({ Message: '<i class="fa-solid fa-check fw-bold"></i> Created successfully', Format: "Default", Type: "success", AdditionalClasses: 'lyt-box-shadow fs-5 fw-bold', OverrideWidthToMax: true, IsDismissable: true });
+        this.divCreateModuleResultPanel.appendChild(alertMsg);
 
         //display new edit panel at the top
         const editModulePanel = this.RenderEditModulePanel(data.Data);
         this.divAuthorsModulesPanel.prepend(editModulePanel);
+
     }
 
     //#endregion

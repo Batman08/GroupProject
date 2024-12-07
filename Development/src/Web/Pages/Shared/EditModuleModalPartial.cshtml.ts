@@ -81,7 +81,7 @@ class EditModuleModal {
     //#endregion
 
 
-    //region GetEditModalModuleData
+    //#region GetEditModalModuleData
 
     private async ServerRequest_GetEditModalModuleData(moduleId: number): Promise<void> {
         const response: Response = await fetch(`${this._urlGetEditModalModuleData}&moduleId=${moduleId}`, { method: 'GET' });
@@ -197,7 +197,7 @@ class EditModuleModal {
         }
 
         const eventType: ModuleUpdatedSuccessEventType = "gp_event_UpdateModuleSuccess";
-        const eventData: ModuleUpdatedSuccessEvent = { ModuleData: data.Data };
+        const eventData: ModuleUpdatedSuccessEvent = { ModuleData: data.Data, EditModal: this.editModuleModal };
         const gpEvent = new CustomEvent(eventType, { bubbles: true, detail: eventData });
         document.body.dispatchEvent(gpEvent);
     }

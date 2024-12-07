@@ -25,5 +25,5 @@ type UpdateModuleDTO = {
 type ModuleUpdatedSuccessEventType = "gp_event_UpdateModuleSuccess"
 type ModuleUpdatedSuccessEvent = {
     ModuleData: AuthorsModuleDTO;
-
+    EditModal: bootstrap.Modal;
 }
