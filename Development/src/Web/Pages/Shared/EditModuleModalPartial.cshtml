@@ -19,11 +19,27 @@
                         </div>
 
                         <div id="divFormInputsPanel" style="display:none;">
+                            @* Module Position *@
+
+                            <div class="mb-4">
+                                <label for="inputModulePosition" class="form-label fw-bold">Story Module Flow</label>
+                                <select id="inputModulePosition" name="ModulePosition" class="form-select" required>
+                                    @foreach (var item in Model.ModulePositionKeywords)
+                                    {
+                                        <option value="@item.KeywordId">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+
+
+                            <hr />
+
+
                             @* Module Content *@
 
                             <div class="mb-4">
                                 <label for="inputModuleContent" class="form-label fw-bold">Main Body Text</label>
-                                <textarea class="form-control" id="inputModuleContent" name="ModuleContent" rows="5"></textarea>
+                                <textarea class="form-control" id="inputModuleContent" name="ModuleContent" rows="5" required></textarea>
                             </div>
 
 
@@ -59,22 +75,6 @@
 
                                 <hr />
                             </div>
-
-
-                            @* Module Position *@
-
-                            <div class="mb-4">
-                                <label for="inputModulePosition" class="form-label fw-bold">Story Module Flow</label>
-                                <select id="inputModulePosition" name="ModulePosition" class="form-select">
-                                    @foreach (var item in Model.ModulePositionKeywords)
-                                    {
-                                        <option value="@item.KeywordId">@item.Name</option>
-                                    }
-                                </select>
-                            </div>
-
-
-                            <hr />
 
 
                             @* Module Keywords *@

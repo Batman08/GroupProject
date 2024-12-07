@@ -6,6 +6,7 @@ namespace Domain.Features.StoryModuleSubmission
     public interface IStoryModuleSubmissionCommands
     {
         Task<(Result, int)> CreateModule(CreateModuleDTO createModuleData);
+        Task<Result> UpdateModule(UpdateModuleDTO updateModuleData);
     }
 
     public class StoryModuleSubmissionCommands : CommandsBase, IStoryModuleSubmissionCommands, IGpScoped
@@ -50,6 +51,49 @@ namespace Domain.Features.StoryModuleSubmission
 
 
             return (Result.Good(), newModuleId);
+        }
+
+        public async Task<Result> UpdateModule(UpdateModuleDTO updateModuleData)
+        {
+            /* update module */
+
+            var module = CommandsContext.Modules.FirstOrDefault(x => x.ModuleId == updateModuleData.ModuleId);
+            if (module == null || module.Author != updateModuleData.Author)
+            {
+                return Result.Bad("Something went wrong. Module not found. Please try again.");
+            }
+
+            module.Contents = updateModuleData.Content;
+            module.PassChoiceText = updateModuleData.PassChoiceText;
+            module.PassChoiceResult = updateModuleData.PassChoiceResult;
+            module.FailChoiceText = updateModuleData.FailChoiceText;
+            module.FailChoiceResult = updateModuleData.FailChoiceResult;
+            module.ModuleStatusTypeId = updateModuleData.ModuleStatusTypeId;
+
+            CommandsContext.Modules.Update(module);
+
+
+            /* remove all keywords for module */
+
+            var module2Keywords = CommandsContext.Modules2Keywords.Where(x => x.ModuleId == updateModuleData.ModuleId);
+            CommandsContext.Modules2Keywords.RemoveRange(module2Keywords);
+
+
+            /* add new keyword for module */
+
+            foreach (var keywordId in updateModuleData.Keywords)
+            {
+                var module2Keyword = new Modules2Keywords
+                {
+                    ModuleId = updateModuleData.ModuleId,
+                    KeywordId = keywordId
+                };
+                await CommandsContext.Modules2Keywords.AddAsync(module2Keyword);
+            }
+
+            await CommandsContext.SaveChangesAsync();
+
+            return Result.Good();
         }
     }
 }

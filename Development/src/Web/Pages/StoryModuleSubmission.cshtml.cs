@@ -56,5 +56,19 @@ namespace Web.Pages
 
             return new JsonResult(responseData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
+
+        public async Task<JsonResult> OnPostUpdateModuleData([FromBody] UpdateModuleDTO updateModuleData)
+        {
+            var result = await _storyModuleSubmissionCommands.UpdateModule(updateModuleData);
+            var returnData = new AuthorsModuleDTO
+            {
+                ModuleId = updateModuleData.ModuleId,
+                ModulePosition = updateModuleData.ModulePosition,
+                ModuleContent = updateModuleData.Content
+            };
+            var responseData = new ResponseDTO<AuthorsModuleDTO>(result.Success, result.Message, returnData);
+
+            return new JsonResult(responseData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
     }
 }
