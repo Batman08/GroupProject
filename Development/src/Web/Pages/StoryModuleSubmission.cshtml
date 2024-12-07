@@ -58,24 +58,24 @@
                             @* Pass Choice*@
                             <div class="mb-4">
                                 <label for="inputPassChoiceText" class="form-label fw-bold">Pass Choice Button Text</label>
-                                <input type="text" class="form-control" id="inputPassChoiceText" name="PassChoiceText" placeholder="" required>
+                                <input type="text" class="form-control" id="inputPassChoiceText" name="PassChoiceText" placeholder="">
                             </div>
 
                             <div class="mb-4">
                                 <label for="inputPassChoiceResult" class="form-label fw-bold">Pass Choice Outcome Text</label>
-                                <textarea class="form-control" id="inputPassChoiceResult" name="PassChoiceResult" rows="3" required></textarea>
+                                <textarea class="form-control" id="inputPassChoiceResult" name="PassChoiceResult" rows="3"></textarea>
                             </div>
 
 
                             @* Fail Choice *@
                             <div class="mb-4">
                                 <label for="inputFailChoiceResult" class="form-label fw-bold">Fail Choice Button Text</label>
-                                <input type="text" class="form-control" id="inputFailChoiceResult" name="FailChoiceText" placeholder="" required>
+                                <input type="text" class="form-control" id="inputFailChoiceResult" name="FailChoiceText" placeholder="">
                             </div>
 
                             <div class="mb-4">
                                 <label for="inputFailChoiceText" class="form-label fw-bold">Fail Choice Outcome Text</label>
-                                <textarea class="form-control" id="inputFailChoiceText" name="FailChoiceResult" rows="3" required></textarea>
+                                <textarea class="form-control" id="inputFailChoiceText" name="FailChoiceResult" rows="3"></textarea>
                             </div>
                         </div>
 
@@ -92,7 +92,7 @@
                                 @foreach (var item in Model.MainKeywords)
                                 {
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="@item.KeywordId" id="@item.KeywordId-CreateForm" required>
+                                        <input class="form-check-input" type="checkbox" value="@item.KeywordId" id="@item.KeywordId-CreateForm">
                                         <label class="form-check-label" for="@item.KeywordId-CreateForm">@item.Name</label>
                                     </div>
                                 }

@@ -63,11 +63,14 @@ class StoryModuleSubmission {
 
     private OnChange_UpdateFormForModulePosition(ev: Event): void {
         const selectedOption: string = this.inputModulePosition.options[this.inputModulePosition.selectedIndex].text;
+        const inputs = this.divModuleChoices.querySelectorAll('.form-control') as NodeListOf<HTMLInputElement>;
         if (selectedOption === "Middle") {
             this.divModuleChoices.style.display = "block";
+            inputs.forEach((input: HTMLInputElement) => input.required = true);
         }
         else {
             this.divModuleChoices.style.display = "none";
+            inputs.forEach((input: HTMLInputElement) => input.required = false);
         }
     }
 
@@ -145,9 +148,6 @@ class StoryModuleSubmission {
     private async ServerRequest_CreateModule(ev: SubmitEvent): Promise<void> {
         ev.preventDefault();
 
-        Utilities.DisableBtn(this.formBtnSubmit);
-        this.formBtnSubmit.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Creating...';
-
         const formData: FormData = new FormData(this.formCreateModule);
         const modulePositionKeywordId: number = parseInt(formData.get("ModulePosition") as string);
         const modulePositionKeywordName: string = (this.inputModulePosition.querySelector(`option[value="${modulePositionKeywordId}"]`) as HTMLOptionElement).textContent;
@@ -174,6 +174,14 @@ class StoryModuleSubmission {
 
         //add keyword ids to dataToServer
         dataToServer.Keywords = keywordIds;
+
+        if (dataToServer.Keywords.length <= 1) {
+            alert("Please select at least one Story Module keyword");
+            return;
+        }
+
+        Utilities.DisableBtn(this.formBtnSubmit);
+        this.formBtnSubmit.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Creating...';
 
         const response: Response = await fetch(this._urlCreateModule, {
             method: 'POST',
