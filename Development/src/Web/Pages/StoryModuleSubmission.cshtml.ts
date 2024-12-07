@@ -220,6 +220,10 @@ class StoryModuleSubmission {
             return;
         }
 
+        //remove no modules found message if it exists
+        const noModulesFoundMsg = this.divAuthorsModulesPanel.querySelector('.alert');
+        if (noModulesFoundMsg) noModulesFoundMsg.remove();
+
         //show alert message
         const alertMsg = Utilities.Alert({ Message: '<i class="fa-solid fa-check fw-bold"></i> Created successfully', Format: "Default", Type: "success", AdditionalClasses: 'lyt-box-shadow fs-5 fw-bold', OverrideWidthToMax: true, IsDismissable: true });
         this.divCreateModuleResultPanel.appendChild(alertMsg);
