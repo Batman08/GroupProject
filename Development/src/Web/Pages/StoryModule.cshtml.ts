@@ -26,6 +26,8 @@ class StoryModule {
         //this is for when a page refresh is done the options page shows
         Utilities.RemoveUrlQueryString();
 
+        this.ReplaceUserDetailsPlaceHoldersInInitialModule();
+
         this.BindClick_InitialModuleContinue();
         this.ConsumeEvent_ModuleChoicePass_BtnContinue();
     }
@@ -33,7 +35,13 @@ class StoryModule {
     //#endregion
 
 
-    //#region InitalModuleContinue
+    //#region InitalModule
+
+    private ReplaceUserDetailsPlaceHoldersInInitialModule(): void {
+        const pModuleContent = this._container.querySelector('#pModuleContent') as HTMLParagraphElement;
+        const moduleContent: string = pModuleContent.innerHTML;
+        pModuleContent.innerHTML = Utilities.ReplaceUserDetailsPlaceHoldersInModule(moduleContent);
+    }
 
     private BindClick_InitialModuleContinue() {
         const btnContinue = this._container.querySelector('#btnContinue') as HTMLButtonElement;
@@ -110,7 +118,7 @@ class StoryModule {
         const divModule = this._container.querySelector('#divModule') as HTMLDivElement;
 
         const pModuleContent = divModule.querySelector('#pModuleContent') as HTMLParagraphElement;
-        pModuleContent.textContent = middleModuleData.Contents;
+        pModuleContent.innerHTML = Utilities.ReplaceUserDetailsPlaceHoldersInModule(middleModuleData.Contents);
 
         const divModuleChoices = divModule.querySelector('#divModuleChoices') as HTMLDivElement;
         divModuleChoices.innerHTML = "";

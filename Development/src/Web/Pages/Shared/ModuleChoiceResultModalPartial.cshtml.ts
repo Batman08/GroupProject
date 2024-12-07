@@ -76,7 +76,7 @@
 
     private LoadResultModal_Pass(choiceResultPassText: string): void {
         const divChoiceResult = this.divResultPassModal.querySelector('#divChoiceResult') as HTMLDivElement;
-        divChoiceResult.innerHTML = `<div class="text-center mb-4"><i class="fa-solid fa-circle-check fa-7x text-success"></i></div> <p>${choiceResultPassText}</p>`;
+        divChoiceResult.innerHTML = `<div class="text-center mb-4"><i class="fa-solid fa-circle-check fa-7x text-success"></i></div> <p>${Utilities.ReplaceUserDetailsPlaceHoldersInModule(choiceResultPassText)}</p>`;
 
         this.resultPassModal.show();
     }
@@ -100,7 +100,7 @@
 
     private LoadResultModal_Fail(choiceResultFailText: string): void {
         const divChoiceResult = this.divResultFailModal.querySelector('#divChoiceResult') as HTMLDivElement;
-        divChoiceResult.innerHTML = `<div class="text-center mb-4"><i class="fa-solid fa-circle-xmark fa-7x text-danger"></i></div> <p>${choiceResultFailText}</p>`;
+        divChoiceResult.innerHTML = `<div class="text-center mb-4"><i class="fa-solid fa-circle-xmark fa-7x text-danger"></i></div> <p>${Utilities.ReplaceUserDetailsPlaceHoldersInModule(choiceResultFailText)}</p>`;
 
         this.resultFailModal.show();
     }
@@ -124,7 +124,7 @@
 
     private LoadEndModuleModal(endModuleText: string): void {
         const divEndModule = this.divEndModuleModal.querySelector('#divEndModule') as HTMLDivElement;
-        divEndModule.innerHTML = `<div class="text-center mb-4"><i class="fa-regular fa-thumbs-up fa-7x text-success"></i></div> <p>${endModuleText}</p>`;
+        divEndModule.innerHTML = `<div class="text-center mb-4"><i class="fa-regular fa-thumbs-up fa-7x text-success"></i></div> <p>${Utilities.ReplaceUserDetailsPlaceHoldersInModule(endModuleText)}</p>`;
 
         this.endModuleModal.show();
     }

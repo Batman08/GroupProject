@@ -105,7 +105,7 @@ class Search {
 
         const pModuleContents = moduleOptionEl.querySelector("#pModuleContents") as HTMLParagraphElement;
         pModuleContents.removeAttribute("id");
-        pModuleContents.textContent = data.Contents;
+        pModuleContents.innerHTML = Utilities.ReplaceUserDetailsPlaceHoldersInModule(data.Contents);
 
         const btnModule = moduleOptionEl.querySelector("#btnModule") as HTMLButtonElement;
         btnModule.removeAttribute("id");

@@ -68,6 +68,17 @@ class Utilities {
         Utilities.LocalStorage_SetItem(author, Utilities.LocalStorageConstant_Author);
     }
 
+    public static ReplaceUserDetailsPlaceHoldersInModule(moduleText: string): string {
+        /* find "[player name]" & "[pronoun]" in the text and replace with data from local storage */
+        const playerDetails = Utilities.GetPlayerDetailsFromStorage();
+        if (playerDetails !== null && playerDetails !== undefined) {
+            moduleText = moduleText.replace('[player name]', `<b>${playerDetails.Name}</b>`);
+            moduleText = moduleText.replace('[pronoun]', `<b>${playerDetails.Pronoun}</b>`);
+        }
+
+        return moduleText;
+    }
+
     //#endregion
 
 
