@@ -35,6 +35,7 @@
         this.btnRestart_FailModal.onclick = (ev: MouseEvent) => this.ResultModalFail_BtnResult(ev);
         this.btnRestart_EndModuleModal.onclick = (ev: MouseEvent) => this.EndModuleModal_BtnResult(ev);
 
+        this.BindOnHidden_PassResultModal();
         this.ConsumeEvent_ModuleChoiceResult_Selected();
         this.ConsumeEvent_EndModule();
     }
@@ -58,6 +59,13 @@
         document.addEventListener(eventType, (ev: CustomEvent) => {
             const detail: EndModuleEvent = ev.detail;
             this.LoadEndModuleModal(detail.EndModuleText);
+        });
+    }
+
+    private BindOnHidden_PassResultModal(): void {
+        this.divResultPassModal.addEventListener('hidden.bs.modal', () => {
+            Utilities.EnableBtn(this.btnContinue);
+            this.btnContinue.innerHTML = 'Continue';
         });
     }
 

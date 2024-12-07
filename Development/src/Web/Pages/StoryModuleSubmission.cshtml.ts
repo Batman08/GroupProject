@@ -15,7 +15,8 @@ class StoryModuleSubmission {
     private readonly divAuthorsModulesPanel = this._container.querySelector('#divAuthorsModulesPanel') as HTMLDivElement;
     private readonly formCreateModule = this._container.querySelector('#formCreateModule') as HTMLFormElement;
     private readonly formBtnSubmit = this.formCreateModule.querySelector('[type="submit"]') as HTMLButtonElement;
-    private readonly inputModulePosition = this.formCreateModule.querySelector('#inputModulePosition') as HTMLFormElement;
+    private readonly divModuleChoices = this.formCreateModule.querySelector('#divModuleChoices') as HTMLDivElement;
+    private readonly inputModulePosition = this.formCreateModule.querySelector('#inputModulePosition') as HTMLSelectElement;
 
     //#endregion
 
@@ -37,7 +38,37 @@ class StoryModuleSubmission {
     //#region Events
 
     private BindEvents(): void {
+        this.ConsumeEvent_ModuleUpdatedSuccess();
+
+
         this.formCreateModule.onsubmit = async (ev: SubmitEvent) => await this.ServerRequest_CreateModule(ev);
+        this.inputModulePosition.onchange = (ev: Event) => this.OnChange_UpdateFormForModulePosition(ev);
+    }
+
+    private ConsumeEvent_ModuleUpdatedSuccess(): void {
+        const eventType: ModuleUpdatedSuccessEventType = "gp_event_UpdateModuleSuccess";
+        document.addEventListener(eventType, (ev: CustomEvent) => {
+            const detail: ModuleUpdatedSuccessEvent = ev.detail;
+            //find module in list and update it
+            const modulePanel = this.divAuthorsModulesPanel.querySelector(`[moduleId="${detail.ModuleData.ModuleId}"]`);
+            if (modulePanel) {
+                const modulePosition = modulePanel.querySelector("div[modulePosition]") as HTMLParagraphElement;
+                modulePosition.textContent = detail.ModuleData.ModulePosition;
+
+                const moduleContent = modulePanel.querySelector("div[moduleContent]") as HTMLParagraphElement;
+                moduleContent.textContent = detail.ModuleData.ModuleContent;
+            }
+        });
+    }
+
+    private OnChange_UpdateFormForModulePosition(ev: Event): void {
+        const selectedOption: string = this.inputModulePosition.options[this.inputModulePosition.selectedIndex].text;
+        if (selectedOption === "Middle") {
+            this.divModuleChoices.style.display = "block";
+        }
+        else {
+            this.divModuleChoices.style.display = "none";
+        }
     }
 
     //#endregion
@@ -80,6 +111,7 @@ class StoryModuleSubmission {
     private RenderEditModulePanel(data: AuthorsModuleDTO): HTMLDivElement {
         const editModulePanelEl = _Layout.ElementTemplates().querySelector('#gp-divEditModulePanel').cloneNode(true) as HTMLDivElement;
         editModulePanelEl.removeAttribute("id");
+        editModulePanelEl.setAttribute("moduleId", data.ModuleId.toString());
 
         const divModulePosition = editModulePanelEl.querySelector("#divModulePosition") as HTMLParagraphElement;
         divModulePosition.removeAttribute("id");
@@ -122,10 +154,10 @@ class StoryModuleSubmission {
 
         let dataToServer: CreateModuleDTO = {
             Content: formData.get("ModuleContent") as string,
-            PassChoiceText: formData.get("PassChoiceText") as string,
-            PassChoiceResult: formData.get("PassChoiceResult") as string,
-            FailChoiceText: formData.get("FailChoiceText") as string,
-            FailChoiceResult: formData.get("FailChoiceResult") as string,
+            PassChoiceText: modulePositionKeywordName === 'Middle' ? formData.get("PassChoiceText") as string : null,
+            PassChoiceResult: modulePositionKeywordName === 'Middle' ? formData.get("PassChoiceResult") as string : null,
+            FailChoiceText: modulePositionKeywordName === 'Middle' ? formData.get("FailChoiceText") as string : null,
+            FailChoiceResult: modulePositionKeywordName === 'Middle' ? formData.get("FailChoiceResult") as string : null,
             Author: Utilities.LocalStorage_LoadItem(Utilities.LocalStorageConstant_Author).Author,
             ModuleStatusTypeId: 2, //hardcode publish status
             Keywords: [],
@@ -169,6 +201,10 @@ class StoryModuleSubmission {
             alert(data.Message);
             return;
         }
+
+        //remove alert message if it exists
+        const alertMsg = this.divAuthorsModulesPanel.querySelector('.alert');
+        if (alertMsg) alertMsg.remove();
 
         //display new edit panel at the top
         const editModulePanel = this.RenderEditModulePanel(data.Data);

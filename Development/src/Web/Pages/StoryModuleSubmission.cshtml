@@ -27,56 +27,56 @@
                     <h2 class="mt-5 mb-4 fw-bold">Create Story Module</h2>
 
                     <form id="formCreateModule" method="post">
-                        @* Module Content *@
+                        @* Module Position *@
 
                         <div class="mb-4">
-                            <label for="inputModuleContent" class="form-label fw-bold">Main Body Text</label>
-                            <textarea class="form-control" id="inputModuleContent" name="ModuleContent" rows="5"></textarea>
-                        </div>
-
-
-                        @* Module Choices *@
-
-                        <div id="divModuleChoices">
-
-                            @* Pass Choice*@
-                            <div class="mb-4">
-                                <label for="inputPassChoiceText" class="form-label fw-bold">Pass Choice Button Text</label>
-                                <input type="text" class="form-control" id="inputPassChoiceText" name="PassChoiceText" placeholder="">
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="inputPassChoiceResult" class="form-label fw-bold">Pass Choice Outcome Text</label>
-                                <textarea class="form-control" id="inputPassChoiceResult" name="PassChoiceResult" rows="3"></textarea>
-                            </div>
-
-
-                            @* Fail Choice *@
-                            <div class="mb-4">
-                                <label for="inputFailChoiceResult" class="form-label fw-bold">Fail Choice Button Text</label>
-                                <input type="text" class="form-control" id="inputFailChoiceResult" name="FailChoiceText" placeholder="">
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="inputFailChoiceText" class="form-label fw-bold">Fail Choice Outcome Text</label>
-                                <textarea class="form-control" id="inputFailChoiceText" name="FailChoiceResult" rows="3"></textarea>
-                            </div>
+                            <label for="inputModulePosition" class="form-label fw-bold">Story Module Flow</label>
+                            <select id="inputModulePosition" name="ModulePosition" class="form-select" required>
+                                @foreach (var item in Model.ModulePositionKeywords)
+                                {
+                                    <option value="@item.KeywordId">@item.Name</option>
+                                }
+                            </select>
                         </div>
 
 
                         <hr />
 
 
-                        @* Module Position *@
+                        @* Module Content *@
 
                         <div class="mb-4">
-                            <label for="inputModulePosition" class="form-label fw-bold">Story Module Flow</label>
-                            <select id="inputModulePosition" name="ModulePosition" class="form-select">
-                                @foreach (var item in Model.ModulePositionKeywords)
-                                {
-                                    <option value="@item.KeywordId">@item.Name</option>
-                                }
-                            </select>
+                            <label for="inputModuleContent" class="form-label fw-bold">Main Body Text</label>
+                            <textarea class="form-control" id="inputModuleContent" name="ModuleContent" rows="5" required></textarea>
+                        </div>
+
+
+                        @* Module Choices *@
+
+                        <div id="divModuleChoices" style="display:none;">
+
+                            @* Pass Choice*@
+                            <div class="mb-4">
+                                <label for="inputPassChoiceText" class="form-label fw-bold">Pass Choice Button Text</label>
+                                <input type="text" class="form-control" id="inputPassChoiceText" name="PassChoiceText" placeholder="" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="inputPassChoiceResult" class="form-label fw-bold">Pass Choice Outcome Text</label>
+                                <textarea class="form-control" id="inputPassChoiceResult" name="PassChoiceResult" rows="3" required></textarea>
+                            </div>
+
+
+                            @* Fail Choice *@
+                            <div class="mb-4">
+                                <label for="inputFailChoiceResult" class="form-label fw-bold">Fail Choice Button Text</label>
+                                <input type="text" class="form-control" id="inputFailChoiceResult" name="FailChoiceText" placeholder="" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="inputFailChoiceText" class="form-label fw-bold">Fail Choice Outcome Text</label>
+                                <textarea class="form-control" id="inputFailChoiceText" name="FailChoiceResult" rows="3" required></textarea>
+                            </div>
                         </div>
 
 
@@ -92,7 +92,7 @@
                                 @foreach (var item in Model.MainKeywords)
                                 {
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="@item.KeywordId" id="@item.KeywordId-CreateForm">
+                                        <input class="form-check-input" type="checkbox" value="@item.KeywordId" id="@item.KeywordId-CreateForm" required>
                                         <label class="form-check-label" for="@item.KeywordId-CreateForm">@item.Name</label>
                                     </div>
                                 }
@@ -132,12 +132,12 @@
     <div id="gp-divEditModulePanel" class="p-3 mb-3 bg-white lyt-box-shadow rounded">
         <div class="px-0 px-md-5 text-muted">
             <div class="fs-5 pt-2 fw-bold">Story Module Flow</div>
-            <div id="divModulePosition" class="fs-6 pt-2"></div>
+            <div modulePosition id="divModulePosition" class="fs-6 pt-2"></div>
 
             <hr />
 
             <div class="fs-5 pt-2 fw-bold">Story Module Content</div>
-            <div id="divModuleContent" class="fs-6 pt-2"></div>
+            <div moduleContent id="divModuleContent" class="fs-6 pt-2"></div>
 
             <div class="text-end"><button id="btnEditModule" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i> Edit</button></div>
         </div>
