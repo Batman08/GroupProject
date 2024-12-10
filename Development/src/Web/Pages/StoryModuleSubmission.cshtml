@@ -138,6 +138,7 @@
 </div>
 
 <partial name="~/Pages/Shared/EditModuleModalPartial.cshtml" model="@Model.EditModuleModalInitialDataModel" />
+<partial name="~/Pages/Shared/DeleteModuleModalPartial.cshtml" />
 
 
 @section ElementTemplates {
@@ -153,7 +154,10 @@
             <div class="fs-5 pt-2 fw-bold">Story Module Content</div>
             <div moduleContent id="divModuleContent" class="fs-6 pt-2"></div>
 
-            <div class="text-end"><button id="btnEditModule" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i> Edit</button></div>
+            <div class="text-end pt-3">
+                <button id="btnDeleteModule" type="button" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i> Delete</button>
+                <button id="btnEditModule" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+            </div>
         </div>
     </div>
 
@@ -163,10 +167,12 @@
 @section Scripts {
 
     <script src="~/Pages/Shared/EditModuleModalPartial.cshtml.js" asp-append-version="true"></script>
+    <script src="~/Pages/Shared/DeleteModuleModalPartial.cshtml.js" asp-append-version="true"></script>
     <script src="~/Pages/StoryModuleSubmission.cshtml.js" asp-append-version="true"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             EditModuleModal.Init();
+            DeleteModuleModal.Init();
             StoryModuleSubmission.Init();
         });
     </script>

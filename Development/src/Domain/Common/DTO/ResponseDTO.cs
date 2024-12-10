@@ -16,7 +16,7 @@
     }
 
 
-    public static class ResultDTO
+    public static class GpResponse
     {
         public static ResponseDTO<T> Success<T>(T data = default!, string message = "")
         {

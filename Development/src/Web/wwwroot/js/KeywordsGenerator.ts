@@ -23,6 +23,9 @@ class KeywordsGenerator {
             console.log("Keywords already generated.");
             return;
         }
+        else {
+            console.log("No generated keywords found in local storage. Generating keywords...");
+        }
 
         await this.ServerRequest_GenerateKeywords();
     }
@@ -60,8 +63,6 @@ class KeywordsGenerator {
     }
 
     private ServerRequestDone_GenerateKeywords(dataFromServer: GeneratedKeywordsDTO): void {
-        console.log(dataFromServer);
-
         //store in local storage
         Utilities.LocalStorage_SetItem(dataFromServer.KeywordsData, Utilities.LocalStorageConstant_GeneratedKeywords);
     }

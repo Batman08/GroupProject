@@ -7,6 +7,7 @@ namespace Domain.Features.StoryModuleSubmission
     {
         Task<(Result, int)> CreateModule(CreateModuleDTO createModuleData);
         Task<Result> UpdateModule(UpdateModuleDTO updateModuleData);
+        Task<Result> DeleteModule(DeleteModuleDTO deleteModuleData);
     }
 
     public class StoryModuleSubmissionCommands : CommandsBase, IStoryModuleSubmissionCommands, IGpScoped
@@ -90,6 +91,31 @@ namespace Domain.Features.StoryModuleSubmission
                 };
                 await CommandsContext.Modules2Keywords.AddAsync(module2Keyword);
             }
+
+            await CommandsContext.SaveChangesAsync();
+
+            return Result.Good();
+        }
+
+        public async Task<Result> DeleteModule(DeleteModuleDTO deleteModuleData)
+        {
+            /* find module */
+
+            var module = CommandsContext.Modules.FirstOrDefault(x => x.ModuleId == deleteModuleData.ModuleId);
+            if (module == null || module.Author != deleteModuleData.Author)
+            {
+                return Result.Bad("Something went wrong. Module not found. Please try again.");
+            }
+
+
+            /* remove all keywords for module */
+
+            var module2Keywords = CommandsContext.Modules2Keywords.Where(x => x.ModuleId == deleteModuleData.ModuleId);
+            CommandsContext.Modules2Keywords.RemoveRange(module2Keywords);
+
+            /* remove module */
+
+            CommandsContext.Modules.Remove(module);
 
             await CommandsContext.SaveChangesAsync();
 

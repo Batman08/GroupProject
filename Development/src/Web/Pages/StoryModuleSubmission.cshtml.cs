@@ -52,7 +52,12 @@ namespace Web.Pages
                 ModulePosition = createModuleData.ModulePosition,
                 ModuleContent = createModuleData.Content
             };
-            var responseData = new ResponseDTO<AuthorsModuleDTO>(result.Item1.Success, result.Item1.Message, returnData);
+
+            ResponseDTO<AuthorsModuleDTO> responseData = null!;
+            if (result.Item1.Success)
+                responseData = GpResponse.Success(returnData, result.Item1.Message);
+            else
+                responseData = GpResponse.Error<AuthorsModuleDTO>(result.Item1.Message);
 
             return new JsonResult(responseData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
@@ -66,7 +71,27 @@ namespace Web.Pages
                 ModulePosition = updateModuleData.ModulePosition,
                 ModuleContent = updateModuleData.Content
             };
-            var responseData = new ResponseDTO<AuthorsModuleDTO>(result.Success, result.Message, returnData);
+
+            ResponseDTO<AuthorsModuleDTO> responseData = null!;
+            if (result.Success)
+                responseData = GpResponse.Success(returnData, result.Message);
+            else
+                responseData = GpResponse.Error<AuthorsModuleDTO>(result.Message);
+
+
+            return new JsonResult(responseData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+
+        public async Task<JsonResult> OnPostDeleteModuleData([FromBody] DeleteModuleDTO deleteModuleData)
+        {
+            var result = await _storyModuleSubmissionCommands.DeleteModule(deleteModuleData);
+
+            ResponseDTO<DeleteModuleDTO> responseData = null!;
+            if (result.Success)
+                responseData = GpResponse.Success(deleteModuleData, result.Message);
+            else
+                responseData = GpResponse.Error<DeleteModuleDTO>(result.Message);
+
 
             return new JsonResult(responseData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }

@@ -58,4 +58,10 @@
         public List<int> Keywords { get; set; } = new List<int>();
         public string ModulePosition { get; set; } = "";
     }
+
+    public class DeleteModuleDTO
+    {
+        public int ModuleId { get; set; }
+        public string Author { get; set; } = "";
+    }
 }

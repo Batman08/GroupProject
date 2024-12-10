@@ -41,7 +41,7 @@ class StoryModuleSubmission {
 
     private BindEvents(): void {
         this.ConsumeEvent_ModuleUpdatedSuccess();
-
+        this.ConsumeEvent_ModuleDeletedSuccess();
 
         this.formCreateModule.onsubmit = async (ev: SubmitEvent) => await this.ServerRequest_CreateModule(ev);
         this.inputModulePosition.onchange = (ev: Event) => this.OnChange_UpdateFormForModulePosition(ev);
@@ -68,6 +68,21 @@ class StoryModuleSubmission {
 
             //hide modal
             detail.EditModal.hide();
+        });
+    }
+
+    private ConsumeEvent_ModuleDeletedSuccess(): void {
+        const eventType: ModuleDeletedSuccessEventType = "gp_event_ModuleDeletedSuccess";
+        document.addEventListener(eventType, (ev: CustomEvent) => {
+            const detail: ModuleDeletedSuccessEvent = ev.detail;
+
+            //show alert message
+            const alertMsg = Utilities.Alert({ Message: '<i class="fa-solid fa-check fw-bold"></i> Deleted successfully', Format: "Default", Type: "success", AdditionalClasses: 'lyt-box-shadow fs-5 fw-bold', OverrideWidthToMax: true, IsDismissable: true });
+            this.divEditModuleResultPanel.appendChild(alertMsg);
+
+            //find module in list and update it
+            const modulePanel = this.divAuthorsModulesPanel.querySelector(`[moduleId="${detail.ModuleId}"]`);
+            if (modulePanel) modulePanel.remove();
         });
     }
 
@@ -139,6 +154,10 @@ class StoryModuleSubmission {
         btnEditModule.onclick = (ev: MouseEvent) => {
             this.DispatchEvent_EditModule(ev, data.ModuleId);
         };
+
+        const btnDeleteModule = editModulePanelEl.querySelector("#btnDeleteModule") as HTMLButtonElement;
+        btnDeleteModule.removeAttribute("id");
+        btnDeleteModule.onclick = (ev: MouseEvent) => DeleteModuleModal.DispatchEvent_OpenDeleteModuleModal(ev, data.ModuleId, editModulePanelEl);
 
         return editModulePanelEl;
     }

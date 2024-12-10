@@ -23,14 +23,12 @@ class Search {
     }
 
     private async Init(): Promise<void> {
-        Utilities.ResetStoredGameDetails();
+        //remove used modules from local storage for new story flow
+        Utilities.LocalStorage_RemoveItem(Utilities.LocalStorageConstant_PreviouslyUsedModules);
 
         this.ConsumeEvent_PlayerDetails_SaveSuccess();
 
-        if (!KeywordsGenerator.Helpers_HasGeneratedKeywords()) {
-            await KeywordsGenerator.Init();
-            console.log("No generated keywords found in local storage.");
-        }
+        await KeywordsGenerator.Init();
 
         if (!Utilities.IsPlayerDetailsInStorage()) {
             _Layout._playerDetailsModal.show();
